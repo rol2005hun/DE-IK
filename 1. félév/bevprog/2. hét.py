@@ -37,7 +37,7 @@ b = int(input("Add meg a második együtthatót: "))
 c = int(input("Add meg a harmadik együtthatót: "))
 
 def getelojel(number):
-    if number>=0:
+    if number >= 0:
         return "+"
     else:
         return ""
@@ -48,8 +48,8 @@ delta = math.pow(b, 2)-4*a*c
 if delta < 0:
     print("Nincs megoldás a valós számok halmazában!")
     sys.exit(1)
-gyok1 = (-b+math.sqrt(delta))/2*a
-gyok2 = (-b-math.sqrt(delta))/2*a
+gyok1 = (-b + math.sqrt(delta)) / 2 * a
+gyok2 = (-b - math.sqrt(delta)) / 2 * a
 
 print(f"Az egyenlet gyökei: x1: {gyok1}, x2: {gyok2}")
 

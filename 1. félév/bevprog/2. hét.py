@@ -70,6 +70,6 @@ else:
     try:
         ev, honap = map(int, datum.split("-"))
         napok_szama = calendar.monthrange(ev, honap)[1]
-        print(f"{ev}-{honap} hónap napjainak száma: {napok_szama}.")
+        print(f"{ev}-{honap} hónap napjainak száma: {napok_szama}")
     except ValueError:
         print("Hibás dátum formátum vagy érvenytelen dátum!")

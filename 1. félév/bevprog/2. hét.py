@@ -42,9 +42,15 @@ def getelojel(number):
     else:
         return ""
 
-print(f"Az egyenlet: {a}x²{getelojel(b)}{b}x{getelojel(c)}{c}=0")
+def checkone(number):
+    if number == 1:
+        return ""
+    else:
+        return number
 
-delta = math.pow(b, 2)-4*a*c
+print(f"Az egyenlet: {checkone(a)}x² {getelojel(b)} {checkone(b)}x {getelojel(c)} {c} = 0")
+
+delta = math.pow(b, 2) - 4 * a * c
 if delta < 0:
     print("Nincs megoldás a valós számok halmazában!")
     sys.exit(1)

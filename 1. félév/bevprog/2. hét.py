@@ -30,6 +30,7 @@ print(f"{number1} {op} {number2} = {output}")
 
 #2. hf
 import math
+import sys
 
 a = int(input("Add meg az első együtthatót: "))
 b = int(input("Add meg a második együtthatót: "))
@@ -44,6 +45,9 @@ def getelojel(number):
 print(f"Az egyenlet: {a}x²{getelojel(b)}{b}x{getelojel(c)}{c}=0")
 
 delta = math.pow(b, 2)-4*a*c
+if delta < 0:
+    print("Nincs megoldás a valós számok halmazában!")
+    sys.exit(1)
 gyok1 = (-b+math.sqrt(delta))/2*a
 gyok2 = (-b-math.sqrt(delta))/2*a
 

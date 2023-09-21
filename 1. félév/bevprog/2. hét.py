@@ -1,14 +1,14 @@
 #1. hf
 import sys
 
-number1 = float(input("Add meg az elso szamot: "))
-op = input("Add meg az operatort: ")
-number2 = float(input("Add meg a masodik szamot: "))
+number1 = float(input("Add meg az első számot: "))
+op = input("Add meg az operátort: ")
+number2 = float(input("Add meg a második szamot: "))
 output = 0
 
 if op == "/":
     if number2 == 0:
-        print("nullaval nem osztunk te ladi")
+        print("Nullával nem osztunk te ladi!")
         sys.exit(1)
     else:
         output = number1 / number2
@@ -23,7 +23,7 @@ elif op == "%":
 elif op == "//":
     output = number1 // number2
 else:
-    print("Ervenyelen operator")
+    print("Érvényelen operátor!")
     sys.exit(1)
 
 print(f"{number1} {op} {number2} = {output}")
@@ -31,9 +31,9 @@ print(f"{number1} {op} {number2} = {output}")
 #2. hf
 import math
 
-a = int(input("Add meg az elso egyutthatot: "))
-b = int(input("Add meg a masodik egyutthatot: "))
-c = int(input("Add meg a harmadik egyutthatot: "))
+a = int(input("Add meg az első együtthatót: "))
+b = int(input("Add meg a második együtthatót: "))
+c = int(input("Add meg a harmadik együtthatót: "))
 
 def getelojel(number):
     if number>=0:
@@ -53,18 +53,15 @@ print(f"Az egyenlet gyokei: x1: {gyok1}, x2: {gyok2}")
 import calendar
 
 # Év és hónap beolvasása
-datum = input("Add meg a datumot (ev-hpnap formatumban): ")
+datum = input("Add meg a dátumot (ev-hónap formátumban): ")
 
 # Dátum szeparátor ellenőrzése
 if "-" not in datum:
-    print("Hibas formátum. A helyes formátum: ev-honap")
+    print("Hibás formátum. A helyes formátum: év-hónap!")
 else:
     try:
-        # Év és hónap kinyerése
         ev, honap = map(int, datum.split("-"))
-
-        # Hónap napjainak számának kiírása
         napok_szama = calendar.monthrange(ev, honap)[1]
-        print(f"{ev}-{honap} honap napjainak szama: {napok_szama}")
+        print(f"{ev}-{honap} hónap napjainak száma: {napok_szama}.")
     except ValueError:
-        print("Hibas datum formatum vagy ervenytelen datum")
+        print("Hibás dátum formátum vagy érvenytelen dátum!")

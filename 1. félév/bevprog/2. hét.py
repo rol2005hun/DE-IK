@@ -52,10 +52,8 @@ print(f"Az egyenlet gyokei: x1: {gyok1}, x2: {gyok2}")
 #3. hf
 import calendar
 
-# Év és hónap beolvasása
 datum = input("Add meg a dátumot (ev-hónap formátumban): ")
 
-# Dátum szeparátor ellenőrzése
 if "-" not in datum:
     print("Hibás formátum. A helyes formátum: év-hónap!")
 else:

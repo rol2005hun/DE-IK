@@ -47,7 +47,7 @@ delta = math.pow(b, 2)-4*a*c
 gyok1 = (-b+math.sqrt(delta))/2*a
 gyok2 = (-b-math.sqrt(delta))/2*a
 
-print(f"Az egyenlet gyokei: x1: {gyok1}, x2: {gyok2}")
+print(f"Az egyenlet gyökei: x1: {gyok1}, x2: {gyok2}")
 
 #3. hf
 import calendar

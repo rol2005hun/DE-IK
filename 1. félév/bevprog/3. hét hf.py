@@ -50,3 +50,16 @@ for i in range(n):
     avg = avg + int(input(""))
 
 print(f"A átlag: {avg / n:.2f}")
+
+#4. hf
+
+n = 1
+i = 0
+avg = 0
+
+while n != 0:
+    i = i + 1
+    n = int(input(""))
+    avg = avg + n
+print(avg)
+print(f"A átlag: {avg / i:.2f}")

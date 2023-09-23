@@ -44,9 +44,9 @@ while jegy >= 0:
 #3. hf
 
 n = int(input("Add meg hány számot olvasol be: "))
-avg = 0.00
+avg = 0
 
 for i in range(n):
-    avg = avg + float(input(""))
+    avg = avg + int(input(""))
 
 print(f"A átlag: {avg / n:.2f}")

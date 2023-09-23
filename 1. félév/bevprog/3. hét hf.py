@@ -1,4 +1,4 @@
-#1. hf
+#0. hf
 
 n = int(input("Hány műveletet szeretnél elvégeztetni? "))
 

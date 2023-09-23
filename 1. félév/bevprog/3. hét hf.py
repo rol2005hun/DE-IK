@@ -40,3 +40,13 @@ while jegy >= 0:
         print("elegseges")
     elif jegy < 50:
         print("elegtelen")
+
+#3. hf
+
+n = int(input("Add meg hány számot olvasol be: "))
+avg = 0.00
+
+for i in range(n):
+    avg = avg + float(input(""))
+
+print(f"A átlag: {avg / n:.2f}")

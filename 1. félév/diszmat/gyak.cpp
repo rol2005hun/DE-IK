@@ -58,3 +58,18 @@ int main() {
 
     return 0;
 }
+//
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+
+int main() {
+    int t[11] = {-117,-134, 64,46,-107,-28, -60, 149, 106, 136};
+    
+    for(int i = 0; i<=9; i++) {
+        if((t[i]-1)%15) cout << t[i] <<endl;
+    }
+
+    return 0;
+}

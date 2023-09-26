@@ -25,3 +25,18 @@ int main() {
 
     return 0;
 }
+//
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+
+int main() {
+    for(int i = 1; i<= 9; i++) {
+        if( (100000*i+60717) % 3 == 0) {
+            cout << i << endl;
+        }
+    }
+
+    return 0;
+}

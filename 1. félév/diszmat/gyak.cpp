@@ -73,3 +73,16 @@ int main() {
 
     return 0;
 }
+//
+#include <iostream>
+using namespace std;
+int main() {
+    for(int i = 0; i<=100; i++) {
+        if((i*8-58)%11==0) {
+            cout << i;
+            break;
+        }
+    }
+    
+    return 0;
+}

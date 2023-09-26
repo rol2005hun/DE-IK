@@ -40,3 +40,21 @@ int main() {
 
     return 0;
 }
+//
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+
+int main() {
+    for(int j = 0; j<=9; j++) {
+        for(int i = 0; i<= 9; i++) {
+            if((440000+i*1000+830+j) % 88 == 0) {
+                cout << i << endl;
+                cout << j << endl;
+            }
+        }
+    }
+
+    return 0;
+}

@@ -18,7 +18,7 @@ paros = 0
 paratlan = 0
 n = 0
 
-while n < 100:
+while n <= 100:
     n = int(input(""))
     if n % 2 == 0:
         paros += 1

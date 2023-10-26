@@ -12,4 +12,9 @@
 % legend('1', '2') -> felülre tesz egy magyarázó boxot
 % fimplicit(@(x,y) x) -> implicit alakja a fv-eknek
 % solve(f) -> megoldja az f(x)=0 egyenletet
+% fplot(f) -> plot csak függvényre
+% diff(f) -> deriválja a függvényt
+% subs(f, s) vagy subs(f, s(1)) -> lokális szélsőérték megh. - 1. használjuk - ha másodrendű derivált akkor inflexiós pont
+% polyfit(x,y, fokszám) -> polinom együtthatóit adja vissza
+% polyval(együtthatók, adott érték) -> behelyettesíti a polinomba az adott értéket
 % <-- commmandok vége -->

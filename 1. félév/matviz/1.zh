@@ -1,0 +1,60 @@
+%
+x = linspace(-2, 3, 100);
+y = ((x.^4-4.*x.^2).*(cos(4.*x-2).^3))./nthroot((x.^3-3.*x.^2+1), 5);
+plot(x, y);
+
+%
+figure;
+fimplicit(@(x, y) sin(2.*y).*cos(x.^2)+x.*sin(3.*y), [-2*pi, 2*pi])
+
+%
+syms x y z
+P = [x, y, z];
+A = [-7, 2, 3];
+B = [1, -3, 1];
+C = [4, 2, -8];
+sik_norm = cross(B-A, C-A);
+dot(sik_norm, P-A)
+
+%
+figure;
+t = linspace(-3, 3, 100);
+x = 2.*t.^3-t.^2-8.*t;
+y = 3.*t.^2-t;
+plot(x, y)
+
+% 
+figure;
+hold on;
+grid on;
+ax = gca;
+ax.XAxisLocation = "origin";
+ax.YAxisLocation = "origin";
+syms x;
+y = x.^4-16.*x.^2;
+fplot(x, y)
+
+zerush = solve(y)
+plot(zerush, 0, "r*")
+
+der1 = diff(y)
+fplot(der1)
+
+der1zerush = solve(der1)
+der1ertek = subs(y, der1zerush)
+plot(der1zerush, der1ertek, "g*");
+
+der2 = diff(der1);
+fplot(der2);
+der2zerush = solve(der2)
+der2ertek = subs(y, der2zerush)
+plot(der2zerush, der2ertek, "k+");
+
+
+%
+a = [5, 2, -3];
+b = [1, -1, 1];
+c = [4, 0, 6];
+dot(a, b)
+acos(dot(b, c) / (norm(b)*norm(c)))
+cross(a, b)

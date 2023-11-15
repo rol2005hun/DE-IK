@@ -6,10 +6,10 @@ online_user_count=$(who | wc -l)
 if [ "$online_user_count" -eq 1 ]; then
   online_users="no one :("
 else
-  online_users=$(who | awk -v user="$current_user" '$1 != user {print $1}' | paste -sd ", ")
+  online_users=$(who | awk -v user="$current_user" '$1 != user {print $1}' | uniq | paste -sd ",")
 fi
 echo $online_users
-printf "Wolimby API:\n"
+printf "Wolimby Status:\n"
 if ping -c 1 account.wolimby.hu | grep -q " 0% packet loss"; then
     echo - Account online
 else

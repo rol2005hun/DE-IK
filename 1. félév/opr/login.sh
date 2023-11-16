@@ -1,7 +1,7 @@
 usrnm=$(who am i | awk '{print $1}')
 printf "Welcome back, $usrnm, the date is: $(date "+%D %r")\n-> Online with you also: "
 current_user=$(whoami)
-online_user_count=$(who | wc -l)
+online_user_count=$(who | cut -d " " -f1 | uniq | wc -l)
 
 if [ "$online_user_count" -eq 1 ]; then
   online_users="no one :("
@@ -15,7 +15,7 @@ if ping -c 1 account.wolimby.hu | grep -q " 0% packet loss"; then
 else
     echo - Account offline
 fi
-if ping -c 1 account.wolimby.hu | grep -q " 0% packet loss"; then
+if ping -c 1 api.account.wolimby.hu | grep -q " 0% packet loss"; then
     echo - Account API online
 else
     echo - Account API offline
@@ -25,7 +25,7 @@ if ping -c 1 social.wolimby.hu | grep -q " 0% packet loss"; then
 else
     echo - Social offline
 fi
-if ping -c 1 account.wolimby.hu | grep -q " 0% packet loss"; then
+if ping -c 1 api.social.wolimby.hu | grep -q " 0% packet loss"; then
     echo - Social API online
 else
     echo - Social API offline
@@ -35,7 +35,7 @@ if ping -c 1 shortify.wolimby.hu | grep -q " 0% packet loss"; then
 else
     echo - Shortify offline
 fi
-if ping -c 1 account.wolimby.hu | grep -q " 0% packet loss"; then
+if ping -c 1 api.shortify.wolimby.hu | grep -q " 0% packet loss"; then
     echo - Shortify API online
 else
     echo - Shortify API offline
@@ -45,7 +45,7 @@ if ping -c 1 games.wolimby.hu | grep -q " 0% packet loss"; then
 else
     echo - Games offline
 fi
-if ping -c 1 account.wolimby.hu | grep -q " 0% packet loss"; then
+if ping -c 1 api.games.wolimby.hu | grep -q " 0% packet loss"; then
     echo - Games API online
 else
     echo - Games API offline

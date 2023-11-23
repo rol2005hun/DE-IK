@@ -28,4 +28,4 @@ with open("txt.txt") as file:
             f1[megvagva[0]] = int(megvagva[2])
         else:
             f1[megvagva[0]] += int(megvagva[2])
-print(*f1)
+print(*f1,sep='\n')

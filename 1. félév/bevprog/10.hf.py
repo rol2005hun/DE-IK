@@ -18,3 +18,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+ #2. hf
+
+f1={}
+with open("txt.txt") as file:
+    for line in file:
+        megvagva = line.strip("\n").split(";")
+        if megvagva[0] not in f1:
+            f1[megvagva[0]] = int(megvagva[2])
+        else:
+            f1[megvagva[0]] += int(megvagva[2])
+print(*f1)

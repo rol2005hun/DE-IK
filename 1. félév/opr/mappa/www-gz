@@ -1,0 +1,18 @@
+/var/www/dotovoda/dotovoda.tgz
+/var/www/dotovoda/dotovoda.sql.gz
+/var/www/dotovoda/dotovoda.tgz
+/var/www/dotovoda/dotovoda.sql.gz
+ennyit szurt bele a programom mert en irtam es mindig mukodik:
+5
+db
+ossz. 
+8
+ossz. ${cat mapppa/www-gz | wc -l} db
+ossz. $(cat mapppa/www-gz | wc -l) db
+ossz. $(cat "mapppa/www-gz | wc -l") db
+ossz. $(cat mappa/www-gz | wc -l) db
+ossz. $(wc -l mappa/www-gz) db
+ossz. 14 mappa/www-gz db
+ossz. \$(wc -l mappa/www-gz) db
+ossz. 16 mappa/www-gz db
+ossz. 17 db

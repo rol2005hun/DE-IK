@@ -1,25 +1,21 @@
+#include <iostream>
 #include <thread>
-#include <vector>
-
 using namespace std;
 
 void workerFunction() {
     while (true) {
-
+        
     }
 }
 
 int main() {
     const int numThreads = thread::hardware_concurrency();
-    vector<thread> threads;
 
     for (int i = 0; i < numThreads; ++i) {
-        threads.emplace_back(workerFunction);
+        thread(workerFunction).detach();
     }
 
-    for (auto& thread : threads) {
-        thread.join();
-    }
+    this_thread::sleep_for(chrono::seconds(10));
 
     return 0;
 }

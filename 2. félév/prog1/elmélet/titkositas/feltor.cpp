@@ -4,11 +4,11 @@
 
 using namespace std;
 
-ifstream file("alma.txt");
+fstream file("alma.txt", ios::in | ios::out);
 
 string xorDecrypt(const string& text, const string& key) {
     string result = text;
-    for (size_t i = 0; i < text.size(); ++i) {
+    for (size_t i = 0; i < text.size(); i++) {
         result[i] = text[i] ^ key[i % key.size()];
     }
     return result;
@@ -18,14 +18,31 @@ int main() {
     string titkositott;
     string fajlszoveg;
     string kulcs = "soboslaiabo$$";
+    string visszafejtett;
 
     while(getline(file, titkositott)) {
-        fajlszoveg += titkositott + "\n";
+        fajlszoveg += titkositott;
+        if (!file.eof()) {
+            fajlszoveg += "\n";
+        }
     }
 
-    fajlszoveg = fajlszoveg.substr(0, fajlszoveg.size() - 1);
+    visszafejtett = xorDecrypt(fajlszoveg, kulcs);
 
-    cout << "Visszafejtett szoveg: " << xorDecrypt(fajlszoveg, kulcs) << endl;
+    cout << "Titkositott szoveg: " << fajlszoveg << endl; 
+    cout << "Visszafejtett szoveg: " << visszafejtett << endl;
+    cout << "Visszaallitsam a fajl tartalmat az eredeti szoveg tartalmara? (I/n) ";
+
+    char x;
+    cin >> x;
+    if(x == 'i' || x == 'I') {
+        file.clear();
+        file.seekp(0);
+
+        file << visszafejtett;
+    }
+
+    file.close();
 
     return 0;
 }

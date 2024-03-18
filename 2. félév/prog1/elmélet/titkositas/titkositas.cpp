@@ -17,8 +17,11 @@ string xorEncrypt(const string& text, const string& key) {
 int main() {
     string fajlszoveg;
     string nemtitkositott;
-    string kulcs = "soboslaiabo$$";
+    string kulcs;
     string titkositott;
+
+    cout << "Kerlek add meg a kulcsot (ne felejtsd el, kell a visszafejteshez): ";
+    cin >> kulcs;
 
     while(getline(file, fajlszoveg)) {
         nemtitkositott += fajlszoveg;

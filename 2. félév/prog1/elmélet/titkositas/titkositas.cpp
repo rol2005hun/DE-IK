@@ -8,7 +8,7 @@ fstream file("alma.txt", ios::in | ios::out);
 
 string xorEncrypt(const string& text, const string& key) {
     string result = text;
-    for (size_t i = 0; i < text.size(); ++i) {
+    for (size_t i = 0; i < text.size(); i++) {
         result[i] = text[i] ^ key[i % key.size()];
     }
     return result;
@@ -22,7 +22,11 @@ int main() {
 
     while(getline(file, fajlszoveg)) {
         nemtitkositott += fajlszoveg;
+        if (!file.eof()) {
+            nemtitkositott += "\n";
+        }
     }
+
 
     titkositott = xorEncrypt(nemtitkositott, kulcs);
 

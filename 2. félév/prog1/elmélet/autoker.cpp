@@ -45,8 +45,10 @@ class AutoKereskedes {
 
 
   void autoTorles(const string & rendszam) {
+    string rendszamCopy = rendszam;
+    transform(rendszamCopy.begin(), rendszamCopy.end(), rendszamCopy.begin(), ::toupper);
     for (auto it = autok.begin(); it != autok.end(); ++it) {
-      if (it -> rendszam == rendszam) {
+      if (it -> rendszam == rendszamCopy) {
         autok.erase(it);
         cout << "Auto torolve." << endl;
         return;

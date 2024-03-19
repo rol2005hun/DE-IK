@@ -4,7 +4,7 @@
 
 using namespace std;
 
-fstream file("alma.txt", ios::in | ios::out);
+fstream file("alma.txt", ios::in | ios::out | ios::binary);
 
 string xorDecrypt(const string& text, const string& key) {
     string result = text;

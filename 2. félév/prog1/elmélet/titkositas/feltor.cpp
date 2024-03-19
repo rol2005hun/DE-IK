@@ -4,8 +4,6 @@
 
 using namespace std;
 
-fstream file("alma.txt", ios::in | ios::out | ios::binary);
-
 string xorDecrypt(const string& text, const string& key) {
     string result = text;
     for (size_t i = 0; i < text.size(); i++) {
@@ -16,9 +14,19 @@ string xorDecrypt(const string& text, const string& key) {
 
 int main() {
     string titkositott;
+    string fajlnev;
     string fajlszoveg;
     string kulcs;
     string visszafejtett;
+
+    cout << "Kerlek add meg a titkositando fajl nevet: ";
+    cin >> fajlnev;
+
+    fstream file(fajlnev, ios::in | ios::out | ios::binary);
+    if(!file) {
+        cout << "Nem letezik ilyen fajl!" << endl;
+        return 1;
+    }
 
     cout << "Kerlek add meg a kulcsot: ";
     cin >> kulcs;
@@ -33,7 +41,7 @@ int main() {
     visszafejtett = xorDecrypt(fajlszoveg, kulcs);
 
     cout << "Titkositott szoveg: " << fajlszoveg << endl; 
-    cout << "Visszafejtett szoveg: " << visszafejtett << endl;
+    cout << "Visszafejtett szoveg: \n" << visszafejtett << endl;
     cout << "Visszaallitsam a fajl tartalmat az eredeti szoveg tartalmara? (I/n) ";
 
     char x;

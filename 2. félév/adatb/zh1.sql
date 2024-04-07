@@ -1,5 +1,5 @@
 select megrendeles, kontener, round(rakomanysuly, 2) from hajo.s_hozzarendel where rakomanysuly > 15
-select * from hajo.s_kikoto where leiras like '%kikötőméret: kicsi%mobil daruk%'
+select * from hajo.s_kikoto where leiras like '%kikötőméret: kicsi%' and leiras like '%mobil daruk%'
 select * from hajo.s_ut where to_char(indulasi_ido, 'MI') != '00'
 select hajo_tipus, count(hajo_tipus) from hajo.s_hajo where max_sulyterheles > 500 group by hajo_tipus
 select to_char(megrendeles_datuma, 'YYYY, MM') from hajo.s_megrendeles group by to_char(megrendeles_datuma, 'YYYY, MM') having count(to_char(megrendeles_datuma, 'YYYY, MM')) > 6 order by to_char(megrendeles_datuma, 'YYYY, MM')

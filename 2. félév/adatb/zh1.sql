@@ -1,4 +1,4 @@
-select kontener || ' ' || megrendeles, round(rakomanysuly, 2) from hajo.s_hozzarendel
+select megrendeles, kontener, round(rakomanysuly, 2) from hajo.s_hozzarendel where rakomanysuly > 15
 select * from hajo.s_kikoto where leiras like '%kikötőméret: kicsi%mobil daruk%'
 select * from hajo.s_ut where to_char(indulasi_ido, 'MI') != '00'
 select hajo_tipus, count(hajo_tipus) from hajo.s_hajo where max_sulyterheles > 500 group by hajo_tipus

@@ -39,4 +39,20 @@ create table s_hajo as
 select * from hajo.s_hajo join hajo.s_hajo_tipus on hajo_tipus = hajo_tipus_id where s_hajo_tipus.nev = 'Small feeder' and netto_suly > 250
 
 --7. feladat
-ez ma nehez pa
+create table s_megrendeles as select * from hajo.s_megrendeles;
+update s_megrendeles set fizetett_osszeg = fizetett_osszeg * 1.15
+where megrendeles_id in (
+    select max(megrendeles_id)
+    from hajo.s_megrendeles
+    join hajo.s_ugyfel on ugyfel = ugyfel_id
+    join hajo.s_helyseg on helyseg = helyseg_id
+    where orszag = 'Franciaország'
+    group by ugyfel_id
+)
+
+--8. feladat
+create view nezet as
+select kikoto_id, helysegnev, orszag, count(megrendeles_id) as megrendelesek_szama from hajo.s_kikoto
+left join hajo.s_helyseg on helyseg_id = helyseg
+left join hajo.s_megrendeles on kikoto_id = erkezesi_kikoto
+group by kikoto_id, helysegnev, orszag

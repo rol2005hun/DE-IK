@@ -24,14 +24,25 @@ void calculateItemFrequencies(const vector<vector<string>>& transactions) {
 void calculateItemCombinations(const vector<vector<string>>& transactions) {
     map<string, int> itemCombinations;
 
-    for (const auto& transaction : transactions)
-        for (size_t i = 0; i < transaction.size(); ++i)
-            for (size_t j = i + 1; j < transaction.size(); ++j)
-                itemCombinations[transaction[i] + " " + transaction[j]]++;
+    for (const auto& transaction : transactions) {
+        if (transaction.size() >= 2) {
+            for (size_t len = 2; len <= transaction.size(); ++len) {
+                for (size_t i = 0; i <= transaction.size() - len; ++i) {
+                    string combination;
+                    for (size_t j = i; j < i + len; ++j) {
+                        combination += transaction[j] + " ";
+                    }
+                    combination.pop_back();
+                    itemCombinations[combination]++;
+                }
+            }
+        }
+    }
 
     cout << "\n2. feladat eredmenyei:" << endl;
-    for (const auto& pair : itemCombinations)
+    for (const auto& pair : itemCombinations) {
         cout << pair.first << " = " << pair.second << endl;
+    }
 }
 
 int main() {

@@ -12,3 +12,10 @@ where keresztnev = 'Yiorgos' and fizetett_osszeg > 2000000
         select megrendeles from hajo.s_szallit
     )
 --3. feladat
+select nev, count(*) from hajo.s_hajo
+join hajo.s_ut on hajo_id = hajo
+group by nev
+order by count(*) desc
+fetch first 3 rows only
+
+--4. feladat

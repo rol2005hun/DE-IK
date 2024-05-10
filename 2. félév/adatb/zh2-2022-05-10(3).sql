@@ -29,3 +29,13 @@ create table s_hajo_javitas (
 )
 
 --5. feladat
+alter table s_ugyfel modify email varchar(50)
+
+--6. feladat
+insert into s_ugyfel
+select u.* from hajo.s_ugyfel u
+join hajo.s_helyseg on helyseg = helyseg_id
+where orszag = 'Olaszország'
+
+--7. feladat
+-- ez mar nem latszik

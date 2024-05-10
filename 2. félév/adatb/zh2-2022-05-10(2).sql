@@ -48,4 +48,13 @@ where (vezeteknev, keresztnev) in (select vezeteknev, keresztnev from (
 )))
 
 --8. feladat
-majd maskor
+create view megrendelesek as
+select m.*, hi.orszag as indulasi_helyseg_orszag, he.orszag as erkezesi_helyseg_orszag
+from hajo.s_megrendeles m
+join hajo.s_kikoto ki on ki.kikoto_id = m.indulasi_kikoto
+join hajo.s_helyseg hi on ki.helyseg = hi.helyseg_id
+join hajo.s_kikoto ke on ke.kikoto_id = m.erkezesi_kikoto
+join hajo.s_helyseg he on ke.helyseg = he.helyseg_id
+
+--9. feladat
+

@@ -37,4 +37,46 @@ join hajo.s_helyseg on helyseg = helyseg_id
 where orszag = 'Olaszország'
 
 --7. feladat
+create table s_ut as select * from hajo.s_ut; --ez csak egy temp utasítás, alsó kell a ZH-ra
+create table s_helyseg as select * from hajo.s_helyseg; --ez csak egy temp utasítás, alsó kell a ZH-ra
+update s_ut set indulasi_kikoto = (
+    select kikoto_id from hajo.s_kikoto
+    join hajo.s_helyseg on helyseg_id = helyseg
+    where helysegnev = 'Algeciras'
+) where ut_id in (
+    select ut_id from hajo.s_ut
+    join hajo.s_kikoto on indulasi_kikoto = kikoto_id
+    join hajo.s_helyseg on helyseg = helyseg_id
+    where to_char(indulasi_ido, 'yyyy.mm') = '2021.07'
+    and helysegnev = 'Valencia'
+)
 
+--8. feladat
+create view utak as
+select u.*, hi.orszag as indulasi, he.orszag as erkezesi from hajo.s_ut u
+join hajo.s_kikoto ki on ki.kikoto_id = indulasi_kikoto
+join hajo.s_helyseg hi on ki.helyseg = hi.helyseg_id
+join hajo.s_kikoto ke on ke.kikoto_id = erkezesi_kikoto
+join hajo.s_helyseg he on ke.helyseg = he.helyseg_id
+
+--9. feladat
+select kikoto_id, helysegnev, orszag from hajo.s_kikoto
+join hajo.s_helyseg on helyseg = helyseg_id
+where kikoto_id in (
+    select indulasi_kikoto as indulasok from hajo.s_ut
+    group by indulasi_kikoto
+    having count(*) = (
+        select max(count(*)) from hajo.s_ut
+        group by indulasi_kikoto
+    )
+) or kikoto_id in (
+    select erkezesi_kikoto as erkezesek from hajo.s_ut
+    group by erkezesi_kikoto
+    having count(*) = (
+        select max(count(*)) from hajo.s_ut
+        group by erkezesi_kikoto
+    )
+)
+
+--10. feladat
+grant update (vezeteknev, keresztnev) s_ugyfel to panovics

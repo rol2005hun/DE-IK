@@ -57,4 +57,19 @@ join hajo.s_kikoto ke on ke.kikoto_id = m.erkezesi_kikoto
 join hajo.s_helyseg he on ke.helyseg = he.helyseg_id
 
 --9. feladat
+select * from hajo.s_megrendeles
+where megrendeles_id in (
+    select megrendeles_id from hajo.s_megrendeles
+    join hajo.s_szallit on megrendeles = megrendeles_id
+    join hajo.s_ut on ut = ut_id
+    group by megrendeles_id
+    having count(*) = (
+        select max(utak_szama) from (
+            select megrendeles, count(*) as utak_szama
+            from hajo.s_szallit
+            group by megrendeles
+        )
+    )
+)
 
+--10. feladat

@@ -19,3 +19,13 @@ order by count(*) desc
 fetch first 3 rows only
 
 --4. feladat
+create table s_hajo_javitas (
+    azonosito varchar(10) references hajo.s_hajo,
+    jav_kezd date,
+    jav_veg date,
+    jav_ar number(10, 2),
+    leiras varchar(200),
+    primary key(azonosito, jav_kezd)
+)
+
+--5. feladat

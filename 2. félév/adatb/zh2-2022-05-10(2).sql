@@ -57,6 +57,7 @@ join hajo.s_kikoto ke on ke.kikoto_id = m.erkezesi_kikoto
 join hajo.s_helyseg he on ke.helyseg = he.helyseg_id
 
 --9. feladat
+create view nezet3 as
 select * from hajo.s_megrendeles
 where megrendeles_id in (
     select megrendeles_id from hajo.s_megrendeles

@@ -1,4 +1,3 @@
--- ennek csak 7 feladat latszodik
 --1. feladat
 select ugyfel_id, vezeteknev, keresztnev, megrendeles_id from hajo.s_ugyfel
 left join hajo.s_megrendeles on ugyfel = ugyfel_id
@@ -38,4 +37,4 @@ join hajo.s_helyseg on helyseg = helyseg_id
 where orszag = 'Olaszország'
 
 --7. feladat
--- ez mar nem latszik
+

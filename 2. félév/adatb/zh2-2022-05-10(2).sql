@@ -74,3 +74,4 @@ where megrendeles_id in (
 )
 
 --10. feladat
+revoke delete, update on s_kikoto from panovics

@@ -9,7 +9,7 @@ where fizetett_osszeg > (
 select vezeteknev, keresztnev, orszag from hajo.s_ugyfel
 join hajo.s_megrendeles on ugyfel = ugyfel_id
 left join hajo.s_helyseg on helyseg = helyseg_id
-where fizetett_osszeg < 1000000
+where fizetett_osszeg <= 1000000
 order by vezeteknev, keresztnev
 
 --3. feladat

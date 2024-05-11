@@ -36,7 +36,7 @@ alter table s_kikoto_telefon add email varchar(200) default 'nem ismert'
 
 --6. feladat
 insert into s_hajo select hajo_id, s_hajo.nev, netto_suly, max_kontener_dbszam, max_sulyterheles, hajo_tipus
-from hajo.s_hajo join hajo.s_hajo_tipus on hajo_tipus = hajo_tipus_id where s_hajo_tipus.nev = 'Small feeder' and netto_suly > 250
+from hajo.s_hajo join hajo.s_hajo_tipus on hajo_tipus = hajo_tipus_id where s_hajo_tipus.nev = 'Small feeder' and netto_suly >= 250
 
 --7. feladat
 create table s_megrendeles as select * from hajo.s_megrendeles; --ez csak egy temp utasítás, alsó kell a ZH-ra

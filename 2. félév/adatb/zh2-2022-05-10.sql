@@ -22,12 +22,13 @@ fetch first 3 rows only
 
 --4. feladat
 create table s_szemelyzet (
-    azonosito number(4) primary key,
-    vezeteknev varchar(40) not null,
-    keresztnev varchar(40) not null,
+    azonosito number(4) constraint pk primary key,
+    vezeteknev varchar2(40) constraint nn1 not null,
+    keresztnev varchar2(40) constraint nn2 not null,
     szuletesi_datum date,
-    email_cim varchar(200),
-    hajohoz_tartozik varchar(10) references hajo.s_hajo not null
+    email_cim varchar2(200),
+    hajohoz_tartozik varchar2(10) references s_hajo(hajo_id) not null,
+    constraint osszk unique(vezeteknev, keresztnev, szuletesi_datum)
 )
 
 --5. feladat

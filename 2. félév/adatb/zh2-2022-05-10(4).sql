@@ -50,7 +50,7 @@ where helysegnev in (
 
 --8. feladat
 create view nezet as
-select kikoto_id, helysegnev, orszag, count(*) as utak_szama from hajo.s_kikoto
+select kikoto_id, helysegnev, orszag, count(ut_id) as utak_szama from hajo.s_kikoto
 join hajo.s_helyseg on helyseg = helyseg_id
 full join hajo.s_ut on kikoto_id = erkezesi_kikoto
 group by kikoto_id, helysegnev, orszag

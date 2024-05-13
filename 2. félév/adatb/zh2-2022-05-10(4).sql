@@ -41,10 +41,10 @@ drop table s_orszag;
 create table s_helyseg as select * from hajo.s_helyseg;
 create table s_orszag as select * from hajo.s_orszag;
 
-update s_helyseg set lakossag = lakossag / 2
-where orszag in (
-    select h.orszag from s_helyseg h
-    join s_orszag o on h.orszag = o.orszag
+select * from hajo.s_helyseg
+where helysegnev in (
+    select helysegnev from hajo.s_helyseg h
+    join hajo.s_orszag o on o.orszag = h.orszag
     where foldresz = 'Afrika'
 ) and lakossag > 500000
 

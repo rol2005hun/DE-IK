@@ -41,7 +41,7 @@ drop table s_orszag;
 create table s_helyseg as select * from hajo.s_helyseg;
 create table s_orszag as select * from hajo.s_orszag;
 
-select * from hajo.s_helyseg
+update s_helyseg set lakossag = round(lakossag / 2)
 where helysegnev in (
     select helysegnev from hajo.s_helyseg h
     join hajo.s_orszag o on o.orszag = h.orszag

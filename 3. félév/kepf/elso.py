@@ -1,8 +1,9 @@
 import cv2
 
 if __name__ == "__main__":
-    open_mode = 1 # -1 alap, 0 fekete, 1 szines
+    open_mode = -1 # -1 alap, 0 fekete, 1 szines
     img = cv2.imread("C:/Users/student/Downloads/kep.png", open_mode)
+    print(type(img))
     formatpng = list()
     formatpng.append(cv2.IMWRITE_PNG_COMPRESSION)
     formatpng.append(1)

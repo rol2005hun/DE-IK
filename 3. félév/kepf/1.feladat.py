@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 
 if __name__ == "__main__":
-    img2 = cv2.imread("C:/Users/student/Downloads/kepkep-a-crow-who-decided-to-join-the-magpies-in-v0-h134590jaf2d1.png", 0)
-    img = cv2.imread("C:/Users/student/Downloads/kep.png", 0)
+    img = cv2.imread("C:/Users/student/Downloads/kepkep-a-crow-who-decided-to-join-the-magpies-in-v0-h134590jaf2d1.png")
+    img2 = cv2.imread("C:/Users/student/Downloads/kep.png", 0)
     if img is not None:
         # Az első 10 sor kiírása
         first_10_rows = img[:10]

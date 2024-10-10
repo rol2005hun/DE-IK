@@ -1,0 +1,6 @@
+<!ENTITY % name.attr "name CDATA #REQUIRED">
+<!ELEMENT menu (menu | item | separator)*>
+<!ATTLIST menu %name.attr;>
+<!ELEMENT item EMPTY>
+<!ATTLIST item %name.attr;>
+<!ELEMENT separator (#PCDATA)>

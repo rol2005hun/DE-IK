@@ -53,5 +53,7 @@ scene > title {
     background-color: #C8A2C8;
     color: white;
     padding: 0.25em;
-    box-shadow: 0.5em 0.5em 0.5em gray;
+    box-shadow: 0.5em 0.5em 0.5em red;
 }
+
+

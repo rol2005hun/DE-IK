@@ -1,0 +1,10 @@
+<!ELEMENT rszoftver (package+)>
+<!ELEMENT package (name, release-date, karbantarto, importing?)>
+<!ELEMENT name (#PCDATA)>
+<!ATTLIST package needtranslate (true | false) #REQUIRED>
+<!ELEMENT release-date (#PCDATA)>
+<!ELEMENT karbantarto (fullname, email)>
+<!ELEMENT importing (importing-package+)>
+<!ELEMENT fullname (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT importing-package (#PCDATA)>

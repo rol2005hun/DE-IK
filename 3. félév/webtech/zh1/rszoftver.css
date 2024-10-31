@@ -1,0 +1,58 @@
+* {
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+package {
+    background-color: antiquewhite;
+    border: thin solid black;
+    padding: 0.5em;
+    margin: 1em;
+    border-radius: 0.25em;
+}
+
+package[needtranslate=false] {
+    background-color: gray;
+    color: black;
+}
+
+package > name {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+release-date::before {
+    content: "Published: ";
+}
+
+karbantarto::before {
+    content: "Maintainer: "
+}
+
+importing::before {
+    content: "Imports: "
+}
+
+email::before {
+    content: "<";
+}
+
+email::after {
+    content: ">";
+}
+
+name, release-date, karbantarto, importing {
+    padding: 0.25em;
+}
+
+fullname, email, importing-package {
+    display: inline;
+}
+
+importing-package::after {
+    content: ",";
+}
+
+importing-package:last-child::after {
+    content: "";
+}

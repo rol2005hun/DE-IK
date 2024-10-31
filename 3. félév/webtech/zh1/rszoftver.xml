@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rszoftver SYSTEM "rszoftver.dtd">
+<?xml-stylesheet href="rszoftver.css" type="text/css"?>
+<rszoftver>
+    <package needtranslate="false">
+        <name>stringr</name>
+        <release-date>2023-11-14</release-date>
+        <karbantarto>
+            <fullname>Hadley Wickham</fullname>
+            <email>hadley@posit.co</email>
+        </karbantarto>
+        <importing>
+            <importing-package>cli</importing-package>
+            <importing-package>glue</importing-package>
+            <importing-package>lifecycle</importing-package>
+            <importing-package>magrittr</importing-package>
+            <importing-package>rlang</importing-package>
+        </importing>
+    </package>
+    <package needtranslate="true">
+        <name>A3</name>
+        <release-date>2015-08-16</release-date>
+        <karbantarto>
+            <fullname>Scott Fortmann-Roe</fullname>
+            <email>scottfr@berkeley.edu</email>
+        </karbantarto>
+    </package>
+    <package needtranslate="false">
+        <name>AalenJohansen</name>
+        <release-date>2023-03-01</release-date>
+        <karbantarto>
+            <fullname>Martin Bladt</fullname>
+            <email>martinbladt@math.ku.dk</email>
+        </karbantarto>
+        <importing>
+            <importing-package>knitr</importing-package>
+            <importing-package>markdown</importing-package>
+        </importing>
+    </package>
+    <package needtranslate="true">
+        <name>AATtools</name>
+        <release-date>2024-08-16</release-date>
+        <karbantarto>
+            <fullname>Sercan Kahveci</fullname>
+            <email>sercan.kahveci@plus.ac.at</email>
+        </karbantarto>
+        <importing>
+            <importing-package>magrittr</importing-package>
+            <importing-package>dplyr</importing-package>
+            <importing-package>doParallel</importing-package>
+            <importing-package>foreach</importing-package>
+        </importing>
+    </package>
+    <package needtranslate="false">
+        <name>ABACUS</name>
+        <release-date>2019-09-20</release-date>
+        <karbantarto>
+            <fullname>Mintu Nath</fullname>
+            <email>dr.m.nath@gmail.com</email>
+        </karbantarto>
+        <importing>
+            <importing-package>ggplot2</importing-package>
+            <importing-package>shiny</importing-package>
+        </importing>
+    </package>
+</rszoftver>

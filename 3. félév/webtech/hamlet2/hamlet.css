@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    width: 70%;
+    border: thin solid black;
+    padding: 1em;
+    font-family: Poppins;
+}
+
+header > hgroup {
+    font-variant: small-caps;
+    letter-spacing: 0.25em;
+}
+
+header > hgroup > p.author {
+    font-size: large;
+}
+
+hgroup, h2, h3 {
+    text-align: center;
+}
+
+nav, section.act, footer {
+    border-top: medium solid black;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
+
+.scene > h3 {
+    padding: 1em;
+    border: thin solid red;
+}
+
+section.scene {
+    counter-reset: linen;
+}
+
+.line::after {
+    content: counter(linen);
+    counter-increment: linen;
+    float: right;
+}
+
+.stagedir {
+    color: gray;
+    font-style: italic;
+}
+
+.stagedir::before {
+    content: '(';
+}
+
+.stagedir::after {
+    content: ')';
+}
+
+.scene > .stagedir {
+    text-align: center;
+}
+
+.scene > :is(.speech, .stagedir) {
+    padding: 1em;
+}
+
+section.scene > div:nth-of-type(odd) {
+    background-color: aliceblue;
+    border-top: medium solid indigo;
+}
+
+section.scene > div:nth-of-type(even) {
+    background-color: white;
+    border-top: medium solid silver;
+}
+
+.speaker {
+    font-weight: bold;
+}
+
+.scene > h3:hover {
+    text-decoration: underline;
+}
+
+.scene > h3:hover::before {
+    content: '#';
+    color: silver;
+    margin-left: -1em;
+    display: inline-block;
+    width: 1em;
+}
+
+footer p {
+    text-align: center;
+}

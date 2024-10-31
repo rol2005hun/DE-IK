@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chessboard</title>
+    <link rel="stylesheet" href="chessboard.css">
+</head>
+<body>
+    <table class="chessboard">
+        <thead>
+            <tr>
+                <th></th>
+                <th>a</th>
+                <th>b</th>
+                <th>c</th>
+                <th>d</th>
+                <th>e</th>
+                <th>f</th>
+                <th>g</th>
+                <th>h</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>8</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>8</th>
+            </tr>
+            <tr>
+                <th>7</th>
+                <td class="blackPawn"></td>
+                <td class="blackPawn"></td>
+                <td class="blackPawn"></td>
+                <td class="blackPawn"></td>
+                <td class="blackPawn"></td>
+                <td class="blackPawn"></td>
+                <td class="blackPawn"></td>
+                <td class="blackPawn"></td>
+                <th>7</th>
+            </tr>
+            <tr>
+                <th>6</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>6</th>
+            </tr>
+            <tr>
+                <th>5</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>5</th>
+            </tr>
+            <tr>
+                <th>4</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>4</th>
+            </tr>
+            <tr>
+                <th>3</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>3</th>
+            </tr>
+            <tr>
+                <th>2</th>
+                <td class="whitePawn"></td>
+                <td class="whitePawn"></td>
+                <td class="whitePawn"></td>
+                <td class="whitePawn"></td>
+                <td class="whitePawn"></td>
+                <td class="whitePawn"></td>
+                <td class="whitePawn"></td>
+                <td class="whitePawn"></td>
+                <th class="whitePawn">2</th>
+            </tr>
+            <tr>
+                <th>1</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>1</th>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>a</th>
+                <th>b</th>
+                <th>c</th>
+                <th>d</th>
+                <th>e</th>
+                <th>f</th>
+                <th>g</th>
+                <th>h</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+    <div id="currentSquare"></div>
+    <script>
+        document.querySelectorAll('table.chessboard td').forEach(
+            (element) => {
+                element.addEventListener('mouseenter', event => {
+                    let element = event.currentTarget;
+                    const col = getIndex(element) - 1;
+                    const row = 8 - getIndex(element.parentNode);
+                    const notation = 'abcdefgh'.charAt(col) + row;
+                    goText(notation);
+                })
+
+                element.addEventListener('mouseleave', event => {
+                    document.getElementById('currentSquare').innerHTML = ``;
+                })
+            }
+        )
+
+        function getIndex(element) {
+            return Array.from(element.parentNode.children).indexOf(element);
+        }
+
+        function goText(notation) {
+            document.getElementById('currentSquare').innerHTML = `Current sqaure: ${notation}`;
+        }
+    </script>
+</table>
+</body>
+</html>

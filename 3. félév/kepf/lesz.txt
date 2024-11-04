@@ -1,0 +1,11 @@
+szinek->szuresek, adott tartomanyon stb
+        -> szinmodellek: rgb, hsv
+            h: hue(szinertek)
+            s: saturation(szintelitettseg)
+            v: value(ertek)
+      -> szinkonverzio: szinskalazas(szelesseg, magassag)2d
+                        3d: szelesseg, magassag,szincsatorna
+
+szurok: kepminoseg javitas, elesites, elmosas/homalyositas
+    box, gauss, median(nem linearis)-> eletlenito szurok
+

@@ -173,13 +173,15 @@ find / -perm -u=s 2>/dev/null
 - Ellenőrizd:  
   `/home/<user>/.ssh/`
 
-### 3. Sudo jogosultságok
+### 3. Sudo jogosultságok megnézése a current userre
 
 ```bash
 sudo -l
 ```
 
 ### 4. /etc/passwd és /etc/shadow jogai
+
+```cat```-eljük ki őket, nézzük meg.
 
 - Fájl jogosultságok ellenőrzése:
 
@@ -226,6 +228,21 @@ echo 'hacker:$5$...:0:0:root:/root:/bin/bash' >> /etc/passwd
 
 - Automatikus sebezhetőségvizsgáló eszköz:  
   https://github.com/carlospolop/PEASS-ng
+
+---
+
+## /etc/hosts manipulálása
+
+Először
+```bash
+sudo nano /etc/hosts
+```
+majd <ip> <local domain> beillesztése, és mentés.
+
+---
+## BurpSuit
+
+```burpsuite``` parancs a futtatásra
 
 ---
 

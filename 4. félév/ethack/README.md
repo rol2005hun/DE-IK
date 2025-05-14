@@ -173,6 +173,12 @@ find / -perm -u=s 2>/dev/null
 - Ellenőrizd:  
   `/home/<user>/.ssh/`
 
+Sima felhasználónév jelszó:
+```ssh -p port usernev@ip```
+
+Privát RSA kulccsal belépés ha megvan:
+```ssh -p port -i <privkulcs elérhetőség>```
+
 ### 3. Sudo jogosultságok megnézése a current userre
 
 ```bash

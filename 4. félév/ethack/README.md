@@ -251,8 +251,3 @@ majd <ip> <local domain> beillesztése, és mentés.
 ```burpsuite``` parancs a futtatásra
 
 ---
-
-## Hasznos Oldalak
-
-- https://exploit-db.com  
-- https://gtfobins.github.io

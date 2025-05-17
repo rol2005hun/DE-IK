@@ -56,7 +56,7 @@ dirb http://<ip> -r -U <felhasználónév>:<jelszó>
 ### Szólisták
 
 * Almappák, felhasználónevek: `/usr/share/wordlists/dirb/common.txt`
-* Jelszavak: `rockyou.txt`
+* Jelszavak: `/usr/share/wordlists/rockyou.txt`
 
 ---
 

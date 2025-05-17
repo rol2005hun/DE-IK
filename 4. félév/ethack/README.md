@@ -48,7 +48,7 @@ nmap -sS -sV <célszerver IP>
 * **Dirb (CLI)**
 
 ```bash
-dirb http://<ip> -r -U <felhasználónév>:<jelszó>
+dirb http://<ip> -r -u <felhasználónév>:<jelszó>
 ```
 
 * **DirBuster (GUI)** - Java alapú, vizuális mappa feltérképező eszköz

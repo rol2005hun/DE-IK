@@ -291,3 +291,10 @@ burpsuite
 * HTTP kérések elfogása, manipulálása, automatizált tesztelésre.
 
 ---
+
+## Más jegyzetek
+
+(Ballai László)[https://docs.google.com/document/d/19Dlm0niGw4250nnIafraZiyRNUJ83Jl7wAHuJ7xKVec/edit?tab=t.0#heading=h.5qucosbyigcr]
+(Sándor Martin)[https://drive.google.com/drive/folders/1pAPH6c5MFAJhJIpG6w88XulvNG5qrfBm]
+(Gyakorló videó 1)[https://www.youtube.com/watch?v=mjCdsCnjMqY]
+(Gyakorló videó 2)[https://youtu.be/Zts_x4AP9rc]

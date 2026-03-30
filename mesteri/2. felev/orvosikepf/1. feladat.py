@@ -1,3 +1,5 @@
+# Hisztogram-kiegyenlítés szürkeskálás képeken
+
 import numpy as np
 import cv2
 

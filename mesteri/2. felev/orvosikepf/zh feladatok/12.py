@@ -1,7 +1,9 @@
 # Szűrők összehasonlítása. Az ILPF, BLPF és GLPF, illetve a IHPF, BHPF és GHPF összehasonlítása páronkénti különbségképek segítségével. Az OpenCV függvénykönyvtár minden függvénye használható.
 
+import os
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 def create_masks(rows, cols, d0, n):
     u = np.arange(rows)
@@ -31,8 +33,10 @@ def apply_mask(image, mask):
     return np.abs(img_back).astype(np.float32)
 
 def main():
-    img = cv2.imread('input.png', cv2.IMREAD_GRAYSCALE)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
     if img is None:
+        print(f"Nem sikerült betölteni a képet: {file_path}")
         return
 
     rows, cols = img.shape
@@ -49,13 +53,48 @@ def main():
     res_bhpf = apply_mask(img, bhpf)
     res_ghpf = apply_mask(img, ghpf)
 
-    cv2.imwrite('diff_low_ilpf_blpf.png', cv2.absdiff(res_ilpf, res_blpf).astype(np.uint8))
-    cv2.imwrite('diff_low_ilpf_glpf.png', cv2.absdiff(res_ilpf, res_glpf).astype(np.uint8))
-    cv2.imwrite('diff_low_blpf_glpf.png', cv2.absdiff(res_blpf, res_glpf).astype(np.uint8))
+    diff_low_ilpf_blpf = cv2.absdiff(res_ilpf, res_blpf).astype(np.uint8)
+    diff_low_ilpf_glpf = cv2.absdiff(res_ilpf, res_glpf).astype(np.uint8)
+    diff_low_blpf_glpf = cv2.absdiff(res_blpf, res_glpf).astype(np.uint8)
 
-    cv2.imwrite('diff_high_ihpf_bhpf.png', cv2.absdiff(res_ihpf, res_bhpf).astype(np.uint8))
-    cv2.imwrite('diff_high_ihpf_ghpf.png', cv2.absdiff(res_ihpf, res_ghpf).astype(np.uint8))
-    cv2.imwrite('diff_high_bhpf_ghpf.png', cv2.absdiff(res_bhpf, res_ghpf).astype(np.uint8))
+    diff_high_ihpf_bhpf = cv2.absdiff(res_ihpf, res_bhpf).astype(np.uint8)
+    diff_high_ihpf_ghpf = cv2.absdiff(res_ihpf, res_ghpf).astype(np.uint8)
+    diff_high_bhpf_ghpf = cv2.absdiff(res_bhpf, res_ghpf).astype(np.uint8)
+    
+    plt.figure(figsize=(15, 10))
+    
+    plt.subplot(2, 3, 1)
+    plt.imshow(diff_low_ilpf_blpf, cmap='gray')
+    plt.title('Low: ILPF vs BLPF')
+    plt.axis('off')
+
+    plt.subplot(2, 3, 2)
+    plt.imshow(diff_low_ilpf_glpf, cmap='gray')
+    plt.title('Low: ILPF vs GLPF')
+    plt.axis('off')
+
+    plt.subplot(2, 3, 3)
+    plt.imshow(diff_low_blpf_glpf, cmap='gray')
+    plt.title('Low: BLPF vs GLPF')
+    plt.axis('off')
+
+    plt.subplot(2, 3, 4)
+    plt.imshow(diff_high_ihpf_bhpf, cmap='gray')
+    plt.title('High: IHPF vs BHPF')
+    plt.axis('off')
+
+    plt.subplot(2, 3, 5)
+    plt.imshow(diff_high_ihpf_ghpf, cmap='gray')
+    plt.title('High: IHPF vs GHPF')
+    plt.axis('off')
+
+    plt.subplot(2, 3, 6)
+    plt.imshow(diff_high_bhpf_ghpf, cmap='gray')
+    plt.title('High: BHPF vs GHPF')
+    plt.axis('off')
+
+    plt.tight_layout()
+    plt.show()
 
 if __name__ == '__main__':
     main()

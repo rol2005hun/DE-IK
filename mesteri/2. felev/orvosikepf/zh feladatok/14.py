@@ -1,7 +1,9 @@
 # Sablonozás alapú éldetektor megvalósítása. OpenCV minden függvénye használható, kivéve az éldetektorokat.
 
+import os
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 def template_edge_detector(image):
     kernels = [
@@ -25,10 +27,25 @@ def template_edge_detector(image):
     return result
 
 def main():
-    img = cv2.imread('input.png', cv2.IMREAD_GRAYSCALE)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
     if img is not None:
         edge_image = template_edge_detector(img)
-        cv2.imwrite('output_kirsch_edges.png', edge_image)
+        
+        plt.figure(figsize=(10, 5))
+        plt.subplot(1, 2, 1)
+        plt.imshow(img, cmap='gray')
+        plt.title('Eredeti kép')
+        plt.axis('off')
+        
+        plt.subplot(1, 2, 2)
+        plt.imshow(edge_image, cmap='gray')
+        plt.title('Kirsch éldetektor')
+        plt.axis('off')
+        
+        plt.show()
+    else:
+        print(f"Nem sikerült betölteni a képet: {file_path}")
 
 if __name__ == '__main__':
     main()

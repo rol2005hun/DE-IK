@@ -1,6 +1,8 @@
 # Fourier-transzformáció és annak inverzének kiszámítása. Bemenő adat egy max. 15x15-ös mátrix, amelynek elemei 8 bites nemnegatív egész számok. A kimenet a számítás eredményét tartalmazó mátrix.
 
+import os
 import numpy as np
+import matplotlib.pyplot as plt
 
 def dft_2d(matrix):
     m, n = matrix.shape
@@ -41,6 +43,20 @@ def main():
     print(np.round(fourier_result[:3, :3], 2))
     print('\nInverz transzformalt matrix:')
     print(inverse_matrix)
+
+    plt.figure(figsize=(10, 5))
+    
+    plt.subplot(1, 2, 1)
+    plt.imshow(input_matrix, cmap='gray', vmin=0, vmax=255)
+    plt.title('Eredeti mátrix')
+    plt.axis('off')
+    
+    plt.subplot(1, 2, 2)
+    plt.imshow(inverse_matrix, cmap='gray', vmin=0, vmax=255)
+    plt.title('Inverz transzformált')
+    plt.axis('off')
+    
+    plt.show()
 
 if __name__ == '__main__':
     main()

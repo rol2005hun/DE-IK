@@ -1,7 +1,9 @@
 # Frekvenciatérbeli szűrés az IBPF és IBSF segítségével. A bemenő adat a kép mellett a két vágási frekvencia. A szűrés kivételével használható az OpenCV függvénykönyvtár.
 
+import os
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 
 def create_distance_matrix(rows, cols):
     center_row, center_col = rows / 2, cols / 2
@@ -41,16 +43,36 @@ def ideal_band_stop_filter(image, low_freq, high_freq):
     return np.clip(img_back, 0, 255).astype(np.uint8)
 
 def main():
-    img = cv2.imread('input.png', cv2.IMREAD_GRAYSCALE)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
     if img is not None:
         low_cutoff = 20.0
         high_cutoff = 60.0
         
         ibpf_result = ideal_band_pass_filter(img, low_cutoff, high_cutoff)
-        cv2.imwrite('output_ibpf.png', ibpf_result)
-        
         ibsf_result = ideal_band_stop_filter(img, low_cutoff, high_cutoff)
-        cv2.imwrite('output_ibsf.png', ibsf_result)
+        
+        plt.figure(figsize=(15, 5))
+        
+        plt.subplot(1, 3, 1)
+        plt.imshow(img, cmap='gray')
+        plt.title('Eredeti kép')
+        plt.axis('off')
+        
+        plt.subplot(1, 3, 2)
+        plt.imshow(ibpf_result, cmap='gray')
+        plt.title('IBPF (Sáváteresztő)')
+        plt.axis('off')
+        
+        plt.subplot(1, 3, 3)
+        plt.imshow(ibsf_result, cmap='gray')
+        plt.title('IBSF (Sávzáró)')
+        plt.axis('off')
+        
+        plt.tight_layout()
+        plt.show()
+    else:
+        print(f"Nem sikerült betölteni a képet: {file_path}")
 
 if __name__ == '__main__':
     main()

@@ -1,7 +1,9 @@
 # Hit-or-Miss transzformáció. A képek beolvasására és kimentésére lehet használni az OpenCV függvényeket.
 
+import os
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 
 def hit_or_miss(image, kernel):
     k_h, k_w = kernel.shape
@@ -25,7 +27,8 @@ def hit_or_miss(image, kernel):
     return output_image
 
 def main():
-    img = cv2.imread('input.png', cv2.IMREAD_GRAYSCALE)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
     if img is not None:
         binary_img = np.where(img > 127, 255, 0).astype(np.uint8)
         
@@ -36,7 +39,22 @@ def main():
         ], dtype=np.int8)
         
         result = hit_or_miss(binary_img, kernel)
-        cv2.imwrite('output_hit_miss.png', result)
+        
+        plt.figure(figsize=(10, 5))
+        
+        plt.subplot(1, 2, 1)
+        plt.imshow(img, cmap='gray')
+        plt.title('Eredeti kép')
+        plt.axis('off')
+        
+        plt.subplot(1, 2, 2)
+        plt.imshow(result, cmap='gray')
+        plt.title('Hit-or-Miss')
+        plt.axis('off')
+        
+        plt.show()
+    else:
+        print(f"Nem sikerült betölteni a képet: {file_path}")
 
 if __name__ == '__main__':
     main()

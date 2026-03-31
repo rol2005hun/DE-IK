@@ -1,7 +1,9 @@
 # Régió-jelölő módszer. Lásd 7/9 fóliát. Bemenet egy fekete, fehér kép. Az eredmény egy színes kép, ahol a színek a régiókat azonosítják.
 
+import os
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 
 class UnionFind:
     def __init__(self):
@@ -69,11 +71,26 @@ def colorize_labels(labels):
     return colors[labels]
 
 def main():
-    img = cv2.imread('input_binary.png', cv2.IMREAD_GRAYSCALE)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input_binary.png')
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
     if img is not None:
         labels = region_labeling(img)
         colored_img = colorize_labels(labels)
-        cv2.imwrite('output_regions.png', colored_img)
+        
+        plt.figure(figsize=(10, 5))
+        plt.subplot(1, 2, 1)
+        plt.imshow(img, cmap='gray')
+        plt.title('Eredeti bináris kép')
+        plt.axis('off')
+        
+        plt.subplot(1, 2, 2)
+        plt.imshow(colored_img)
+        plt.title('Régiók')
+        plt.axis('off')
+        
+        plt.show()
+    else:
+        print(f"Nem sikerült betölteni a képet: {file_path}")
 
 if __name__ == '__main__':
     main()

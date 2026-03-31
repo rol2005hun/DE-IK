@@ -1,7 +1,9 @@
 # Szürkeskálás dilatáció és erózió. A képek beolvasására és kimentésére lehet használni az OpenCV függvényeket.
 
+import os
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 
 def grayscale_dilation(image, kernel):
     k_h, k_w = kernel.shape
@@ -36,15 +38,35 @@ def grayscale_erosion(image, kernel):
     return output_image
 
 def main():
-    img = cv2.imread('input.png', cv2.IMREAD_GRAYSCALE)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
     if img is not None:
         kernel = np.ones((3, 3), dtype=np.uint8)
         
         dilated = grayscale_dilation(img, kernel)
         eroded = grayscale_erosion(img, kernel)
         
-        cv2.imwrite('dilated.png', dilated)
-        cv2.imwrite('eroded.png', eroded)
+        plt.figure(figsize=(15, 5))
+        
+        plt.subplot(1, 3, 1)
+        plt.imshow(img, cmap='gray')
+        plt.title('Eredeti kép')
+        plt.axis('off')
+        
+        plt.subplot(1, 3, 2)
+        plt.imshow(dilated, cmap='gray')
+        plt.title('Dilatáció')
+        plt.axis('off')
+        
+        plt.subplot(1, 3, 3)
+        plt.imshow(eroded, cmap='gray')
+        plt.title('Erózió')
+        plt.axis('off')
+        
+        plt.tight_layout()
+        plt.show()
+    else:
+        print(f"Nem sikerült betölteni a képet: {file_path}")
 
 if __name__ == '__main__':
     main()

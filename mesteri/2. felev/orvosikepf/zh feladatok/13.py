@@ -2,6 +2,8 @@
 
 import cv2
 import numpy as np
+import os
+import matplotlib.pyplot as plt
 
 def create_band_masks(rows, cols, d0, w, n):
     u = np.arange(rows) - rows / 2
@@ -33,8 +35,10 @@ def apply_mask(image, mask):
     return np.abs(img_back).astype(np.float32)
 
 def main():
-    img = cv2.imread('input.png', cv2.IMREAD_GRAYSCALE)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
     if img is None:
+        print(f"Nem sikerült betölteni a képet: {file_path}")
         return
 
     rows, cols = img.shape
@@ -52,13 +56,48 @@ def main():
     res_bbsf = apply_mask(img, bbsf)
     res_gbsf = apply_mask(img, gbsf)
 
-    cv2.imwrite('diff_pass_ibpf_bbpf.png', np.clip(cv2.absdiff(res_ibpf, res_bbpf), 0, 255).astype(np.uint8))
-    cv2.imwrite('diff_pass_ibpf_gbpf.png', np.clip(cv2.absdiff(res_ibpf, res_gbpf), 0, 255).astype(np.uint8))
-    cv2.imwrite('diff_pass_bbpf_gbpf.png', np.clip(cv2.absdiff(res_bbpf, res_gbpf), 0, 255).astype(np.uint8))
+    diff_pass_ibpf_bbpf = np.clip(cv2.absdiff(res_ibpf, res_bbpf), 0, 255).astype(np.uint8)
+    diff_pass_ibpf_gbpf = np.clip(cv2.absdiff(res_ibpf, res_gbpf), 0, 255).astype(np.uint8)
+    diff_pass_bbpf_gbpf = np.clip(cv2.absdiff(res_bbpf, res_gbpf), 0, 255).astype(np.uint8)
 
-    cv2.imwrite('diff_stop_ibsf_bbsf.png', np.clip(cv2.absdiff(res_ibsf, res_bbsf), 0, 255).astype(np.uint8))
-    cv2.imwrite('diff_stop_ibsf_gbsf.png', np.clip(cv2.absdiff(res_ibsf, res_gbsf), 0, 255).astype(np.uint8))
-    cv2.imwrite('diff_stop_bbsf_gbsf.png', np.clip(cv2.absdiff(res_bbsf, res_gbsf), 0, 255).astype(np.uint8))
+    diff_stop_ibsf_bbsf = np.clip(cv2.absdiff(res_ibsf, res_bbsf), 0, 255).astype(np.uint8)
+    diff_stop_ibsf_gbsf = np.clip(cv2.absdiff(res_ibsf, res_gbsf), 0, 255).astype(np.uint8)
+    diff_stop_bbsf_gbsf = np.clip(cv2.absdiff(res_bbsf, res_gbsf), 0, 255).astype(np.uint8)
+
+    plt.figure(figsize=(15, 10))
+    
+    plt.subplot(2, 3, 1)
+    plt.imshow(diff_pass_ibpf_bbpf, cmap='gray')
+    plt.title('IBPF - BBPF különbség')
+    plt.axis('off')
+    
+    plt.subplot(2, 3, 2)
+    plt.imshow(diff_pass_ibpf_gbpf, cmap='gray')
+    plt.title('IBPF - GBPF különbség')
+    plt.axis('off')
+    
+    plt.subplot(2, 3, 3)
+    plt.imshow(diff_pass_bbpf_gbpf, cmap='gray')
+    plt.title('BBPF - GBPF különbség')
+    plt.axis('off')
+    
+    plt.subplot(2, 3, 4)
+    plt.imshow(diff_stop_ibsf_bbsf, cmap='gray')
+    plt.title('IBSF - BBSF különbség')
+    plt.axis('off')
+    
+    plt.subplot(2, 3, 5)
+    plt.imshow(diff_stop_ibsf_gbsf, cmap='gray')
+    plt.title('IBSF - GBSF különbség')
+    plt.axis('off')
+    
+    plt.subplot(2, 3, 6)
+    plt.imshow(diff_stop_bbsf_gbsf, cmap='gray')
+    plt.title('BBSF - GBSF különbség')
+    plt.axis('off')
+    
+    plt.tight_layout()
+    plt.show()
 
 if __name__ == '__main__':
     main()

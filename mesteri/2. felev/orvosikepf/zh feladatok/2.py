@@ -12,36 +12,39 @@ def average_filter(image, kernel_size, mode):
     if mode == 'valid':
         out_h, out_w = h - 2 * pad, w - 2 * pad
         result = np.zeros((out_h, out_w), dtype=np.float32)
-        for i in range(out_h):
-            for j in range(out_w):
-                window = image[i:i+kernel_size, j:j+kernel_size]
-                result[i, j] = np.mean(window)
+        for dy in range(kernel_size):
+            for dx in range(kernel_size):
+                result += image[dy:dy+out_h, dx:dx+out_w]
+        result /= (kernel_size * kernel_size)
         return result.astype(np.uint8)
 
     elif mode == 'zero':
         padded = np.pad(image, pad, mode='constant', constant_values=0)
         result = np.zeros_like(image, dtype=np.float32)
-        for i in range(h):
-            for j in range(w):
-                window = padded[i:i+kernel_size, j:j+kernel_size]
-                result[i, j] = np.mean(window)
+        for dy in range(kernel_size):
+            for dx in range(kernel_size):
+                result += padded[dy:dy+h, dx:dx+w]
+        result /= (kernel_size * kernel_size)
         return result.astype(np.uint8)
 
     elif mode == 'ignore':
+        padded = np.pad(image, pad, mode='constant', constant_values=0)
+        mask = np.pad(np.ones_like(image), pad, mode='constant', constant_values=0)
+        
         result = np.zeros_like(image, dtype=np.float32)
-        for i in range(h):
-            for j in range(w):
-                r_start = max(0, i - pad)
-                r_end = min(h, i + pad + 1)
-                c_start = max(0, j - pad)
-                c_end = min(w, j + pad + 1)
-                window = image[r_start:r_end, c_start:c_end]
-                result[i, j] = np.mean(window)
-        return result.astype(np.uint8)
+        count = np.zeros_like(image, dtype=np.float32)
+        
+        for dy in range(kernel_size):
+            for dx in range(kernel_size):
+                result += padded[dy:dy+h, dx:dx+w]
+                count += mask[dy:dy+h, dx:dx+w]
+                
+        return (result / count).astype(np.uint8)
 
 def main():
     file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
     img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+    
     if img is not None:
         res_valid = average_filter(img, 3, 'valid')
         res_zero = average_filter(img, 5, 'zero')
@@ -51,7 +54,7 @@ def main():
         
         plt.subplot(1, 4, 1)
         plt.imshow(img, cmap='gray')
-        plt.title('Eredeti kép')
+        plt.title('Eredeti kep')
         plt.axis('off')
         
         plt.subplot(1, 4, 2)
@@ -71,8 +74,6 @@ def main():
 
         plt.tight_layout()
         plt.show()
-    else:
-        print(f"Nem sikerült betölteni a képet: {file_path}")
 
 if __name__ == '__main__':
     main()

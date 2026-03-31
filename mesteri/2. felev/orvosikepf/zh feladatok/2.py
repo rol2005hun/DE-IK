@@ -1,7 +1,9 @@
 # Átlagoló szűrő szürkeskálás képeken. A program paramétere a sablon mérete: 3x3, 5x5 vagy 7x7, illetve a hiányzó pozíciók értelmezése: csak teljes illeszkedés van, hiányzó elemek nullák, hiányzó elemek kimaradnak.
 
+import os
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 
 def average_filter(image, kernel_size, mode):
     h, w = image.shape
@@ -38,15 +40,39 @@ def average_filter(image, kernel_size, mode):
         return result.astype(np.uint8)
 
 def main():
-    img = cv2.imread('input.png', cv2.IMREAD_GRAYSCALE)
+    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
     if img is not None:
         res_valid = average_filter(img, 3, 'valid')
         res_zero = average_filter(img, 5, 'zero')
         res_ignore = average_filter(img, 7, 'ignore')
 
-        cv2.imwrite('out_valid.png', res_valid)
-        cv2.imwrite('out_zero.png', res_zero)
-        cv2.imwrite('out_ignore.png', res_ignore)
+        plt.figure(figsize=(15, 5))
+        
+        plt.subplot(1, 4, 1)
+        plt.imshow(img, cmap='gray')
+        plt.title('Eredeti kép')
+        plt.axis('off')
+        
+        plt.subplot(1, 4, 2)
+        plt.imshow(res_valid, cmap='gray')
+        plt.title('Valid (3x3)')
+        plt.axis('off')
+
+        plt.subplot(1, 4, 3)
+        plt.imshow(res_zero, cmap='gray')
+        plt.title('Zero (5x5)')
+        plt.axis('off')
+
+        plt.subplot(1, 4, 4)
+        plt.imshow(res_ignore, cmap='gray')
+        plt.title('Ignore (7x7)')
+        plt.axis('off')
+
+        plt.tight_layout()
+        plt.show()
+    else:
+        print(f"Nem sikerült betölteni a képet: {file_path}")
 
 if __name__ == '__main__':
     main()

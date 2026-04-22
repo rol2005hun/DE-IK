@@ -4,54 +4,50 @@ import os
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import warnings
+from numpy.lib.stride_tricks import sliding_window_view
 
-def median_filter(image, kernel_size, mode):
-    h, w = image.shape
-    pad = kernel_size // 2
+def median_filter(image: np.ndarray, kernel_size: int, mode: str) -> np.ndarray:
+    pad: int = kernel_size // 2
 
     if mode == 'valid':
-        out_h, out_w = h - 2 * pad, w - 2 * pad
-        result = np.zeros((out_h, out_w), dtype=np.uint8)
-        for i in range(out_h):
-            for j in range(out_w):
-                window = image[i:i+kernel_size, j:j+kernel_size]
-                result[i, j] = np.median(window)
-        return result
+        windows: np.ndarray = sliding_window_view(image, (kernel_size, kernel_size))
+        result: np.ndarray = np.median(windows, axis=(2, 3))
+        return result.astype(np.uint8)
 
     elif mode == 'zero':
-        padded = np.pad(image, pad, mode='constant', constant_values=0)
-        result = np.zeros_like(image)
-        for i in range(h):
-            for j in range(w):
-                window = padded[i:i+kernel_size, j:j+kernel_size]
-                result[i, j] = np.median(window)
-        return result
+        padded: np.ndarray = np.pad(image, pad, mode='constant', constant_values=0)
+        windows: np.ndarray = sliding_window_view(padded, (kernel_size, kernel_size))
+        result: np.ndarray = np.median(windows, axis=(2, 3))
+        return result.astype(np.uint8)
 
     elif mode == 'ignore':
-        result = np.zeros_like(image)
-        for i in range(h):
-            for j in range(w):
-                r_start = max(0, i - pad)
-                r_end = min(h, i + pad + 1)
-                c_start = max(0, j - pad)
-                c_end = min(w, j + pad + 1)
-                window = image[r_start:r_end, c_start:c_end]
-                result[i, j] = np.median(window)
-        return result
+        image_float: np.ndarray = image.astype(np.float32)
+        padded_nan: np.ndarray = np.pad(image_float, pad, mode='constant', constant_values=np.nan)
+        windows: np.ndarray = sliding_window_view(padded_nan, (kernel_size, kernel_size))
+        
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', category=RuntimeWarning)
+            result: np.ndarray = np.nanmedian(windows, axis=(2, 3))
+            
+        return result.astype(np.uint8)
+        
+    return np.zeros_like(image)
 
-def main():
-    file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
-    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+def main() -> None:
+    file_path: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.png')
+    img: np.ndarray = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+    
     if img is not None:
-        res_valid = median_filter(img, 3, 'valid')
-        res_zero = median_filter(img, 5, 'zero')
-        res_ignore = median_filter(img, 7, 'ignore')
+        res_valid: np.ndarray = median_filter(img, 3, 'valid')
+        res_zero: np.ndarray = median_filter(img, 5, 'zero')
+        res_ignore: np.ndarray = median_filter(img, 7, 'ignore')
 
         plt.figure(figsize=(15, 5))
         
         plt.subplot(1, 4, 1)
         plt.imshow(img, cmap='gray')
-        plt.title('Eredeti kép')
+        plt.title('Eredeti kep')
         plt.axis('off')
         
         plt.subplot(1, 4, 2)
@@ -72,7 +68,7 @@ def main():
         plt.tight_layout()
         plt.show()
     else:
-        print(f"Nem sikerült betölteni a képet: {file_path}")
+        print(f'Nem sikerult betolteni a kepet: {file_path}')
 
 if __name__ == '__main__':
     main()

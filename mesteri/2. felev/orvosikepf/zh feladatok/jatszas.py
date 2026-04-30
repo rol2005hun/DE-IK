@@ -3,30 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-def process_image(img):
-    res = img.copy()
-
-    mode = 'nullas'
-    k=7
-    pad=k//2
-    h,w=img.shape
-
-    # 4 5 6
-    # 3 9 5
-    # 3 0 21
-
-    if mode == 'teljes':
-        for i in range(h-pad, pad):
-            for j in range(w-pad, pad):
-                res[i,j]=res.mean()
-
+def process_image_stack(images, mode='median'):
+    stack = np.stack(images)
     
-    if mode == 'nullas':
+    if mode == 'atlag':
+        res = np.mean(stack, axis=0).astype('uint8')
+    elif mode == 'median':
+        res = np.median(stack, axis=0).astype('uint8')
         
-
-    if mode == 'figyelmen_kivul_hagyas':
-        
-
     return res
 
 def compare_results(original, processed):
@@ -43,15 +27,25 @@ def compare_results(original, processed):
     plt.show()
 
 def main():
-    path = os.path.join(os.path.dirname(__file__), 'input.png')
-    img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+    images = []
+    base_path = os.path.dirname(__file__)
     
-    if img is None:
+    for i in range(1, 4):
+        if i == 1:
+            path = os.path.join(base_path, 'input.png')
+        else:
+            path = os.path.join(base_path, f'input{i}.png')
+        img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        img = cv2.resize(img, (1024, 1024))
+        if img is not None:
+            images.append(img)
+            
+    if len(images) == 0:
         print('image load error')
         return
 
-    result = process_image(img)
-    compare_results(img, result)
+    result = process_image_stack(images, mode='median')
+    compare_results(images[0], result)
 
 if __name__ == '__main__':
     main()

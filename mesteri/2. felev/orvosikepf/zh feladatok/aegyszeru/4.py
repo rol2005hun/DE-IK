@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 
 def process_images(images, mode='atlag'):
+    # Ezzel stackeljük a képeket egy új dimenzió mentén, így egy 3D tömböt kapunk, ahol az első dimenzió a képek száma, a második és harmadik dimenzió pedig a képek magassága és szélessége.
     stack = np.stack(images, axis=0)
     
     if mode == 'atlag':

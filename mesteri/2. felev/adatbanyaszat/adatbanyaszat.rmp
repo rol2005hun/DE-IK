@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="12.0.005">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="12.0.005" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="open_file" compatibility="12.0.005" expanded="true" height="68" name="Open File" width="90" x="45" y="34">
+        <parameter key="resource_type" value="URL"/>
+        <parameter key="url" value="https://archive.ics.uci.edu/static/public/73/mushroom.zip"/>
+      </operator>
+      <operator activated="true" class="loop_zipfile_entries" compatibility="12.0.005" expanded="true" height="82" name="Loop Zip-File Entries" width="90" x="179" y="34">
+        <parameter key="internal_directory" value=""/>
+        <parameter key="filter" value="agaricus-lepiota\.data"/>
+        <parameter key="filtered_string" value="file name (last part of the path)"/>
+        <parameter key="file_name_macro" value="file_name"/>
+        <parameter key="file_path_macro" value="file_path"/>
+        <parameter key="parent_path_macro" value="parent_path"/>
+        <parameter key="recursive" value="false"/>
+        <parameter key="iterate_over_files" value="true"/>
+        <parameter key="iterate_over_subdirs" value="false"/>
+        <process expanded="true">
+          <operator activated="true" class="read_csv" compatibility="12.0.005" expanded="true" height="68" name="Read CSV" width="90" x="45" y="34">
+            <parameter key="csv_file" value="C:\Users\rrol2\Downloads\mushroom\agaricus-lepiota.data"/>
+            <parameter key="column_separators" value=","/>
+            <parameter key="trim_lines" value="false"/>
+            <parameter key="multiline_text" value="false"/>
+            <parameter key="use_quotes" value="true"/>
+            <parameter key="quotes_character" value="&quot;"/>
+            <parameter key="escape_character" value="\"/>
+            <parameter key="skip_comments" value="true"/>
+            <parameter key="comment_characters" value="#"/>
+            <parameter key="starting_row" value="1"/>
+            <parameter key="parse_numbers" value="true"/>
+            <parameter key="decimal_character" value="."/>
+            <parameter key="grouped_digits" value="false"/>
+            <parameter key="grouping_character" value=","/>
+            <parameter key="infinity_representation" value=""/>
+            <parameter key="date_format" value=""/>
+            <parameter key="use_header_row" value="false"/>
+            <parameter key="header_row" value="1"/>
+            <parameter key="first_row_as_names" value="true"/>
+            <list key="annotations"/>
+            <parameter key="time_zone" value="Europe/Budapest"/>
+            <parameter key="locale" value="English (United States)"/>
+            <parameter key="encoding" value="windows-1250"/>
+            <parameter key="read_all_values_as_polynominal" value="false"/>
+            <list key="data_set_meta_data_information">
+              <parameter key="0" value="poisonous.true.polynominal.label"/>
+              <parameter key="1" value="cap-shape.true.polynominal.attribute"/>
+              <parameter key="2" value="cap-surface.true.polynominal.attribute"/>
+              <parameter key="3" value="cap-color.true.polynominal.attribute"/>
+              <parameter key="4" value="bruises.true.polynominal.attribute"/>
+              <parameter key="5" value="odor.true.polynominal.attribute"/>
+              <parameter key="6" value="gill-attachment.true.polynominal.attribute"/>
+              <parameter key="7" value="gill-spacing.true.polynominal.attribute"/>
+              <parameter key="8" value="gill-size.true.binominal.attribute"/>
+              <parameter key="9" value="gill-color.true.polynominal.attribute"/>
+              <parameter key="10" value="stalk-shape.true.binominal.attribute"/>
+              <parameter key="11" value="stalk-root.true.polynominal.attribute"/>
+              <parameter key="12" value="stalk-surface-above-ring.true.polynominal.attribute"/>
+              <parameter key="13" value="stalk-surface-below-ring.true.polynominal.attribute"/>
+              <parameter key="14" value="stalk-color-above-ring.true.polynominal.attribute"/>
+              <parameter key="15" value="stalk-color-below-ring.true.polynominal.attribute"/>
+              <parameter key="16" value="veil-type.true.binominal.attribute"/>
+              <parameter key="17" value="veil-color.true.polynominal.attribute"/>
+              <parameter key="18" value="ring-number.true.polynominal.attribute"/>
+              <parameter key="19" value="ring-type.true.polynominal.attribute"/>
+              <parameter key="20" value="spore-print-color.true.polynominal.attribute"/>
+              <parameter key="21" value="population.true.polynominal.attribute"/>
+              <parameter key="22" value="habitat.true.polynominal.attribute"/>
+            </list>
+            <parameter key="read_not_matching_values_as_missings" value="false"/>
+          </operator>
+          <connect from_port="file object" to_op="Read CSV" to_port="file"/>
+          <connect from_op="Read CSV" from_port="output" to_port="out 1"/>
+          <portSpacing port="source_file object" spacing="0"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="append" compatibility="12.0.005" expanded="true" height="82" name="Append" width="90" x="313" y="34">
+        <parameter key="data_management" value="auto"/>
+        <parameter key="merge_type" value="all"/>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="12.0.005" expanded="true" height="82" name="Maps" width="90" x="447" y="34">
+        <process expanded="true">
+          <operator activated="true" class="map" compatibility="12.0.005" expanded="true" height="82" name="Poisonous" width="90" x="45" y="34">
+            <parameter key="attribute_filter_type" value="single"/>
+            <parameter key="attribute" value="poisonous"/>
+            <parameter key="attributes" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="true"/>
+            <list key="value_mappings">
+              <parameter key="p" value="poisonous"/>
+              <parameter key="e" value="edible"/>
+            </list>
+            <parameter key="consider_regular_expressions" value="false"/>
+            <parameter key="add_default_mapping" value="false"/>
+          </operator>
+          <operator activated="true" class="map" compatibility="12.0.005" expanded="true" height="82" name="Colors" width="90" x="179" y="34">
+            <parameter key="attribute_filter_type" value="subset"/>
+            <parameter key="attribute" value="poisonous"/>
+            <parameter key="attributes" value="cap-color|gill-color|spore-print-color|stalk-color-above-ring|stalk-color-below-ring|veil-color"/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="false"/>
+            <list key="value_mappings">
+              <parameter key="n" value="brown"/>
+              <parameter key="b" value="buff"/>
+              <parameter key="c" value="cinnamon"/>
+              <parameter key="g" value="gray"/>
+              <parameter key="r" value="green"/>
+              <parameter key="p" value="pink"/>
+              <parameter key="u" value="puple"/>
+              <parameter key="e" value="red"/>
+              <parameter key="w" value="white"/>
+              <parameter key="y" value="yellow"/>
+              <parameter key="o" value="orange"/>
+              <parameter key="t" value="tapering"/>
+              <parameter key="f" value="fibrous"/>
+            </list>
+            <parameter key="consider_regular_expressions" value="false"/>
+            <parameter key="add_default_mapping" value="false"/>
+          </operator>
+          <operator activated="true" class="map" compatibility="12.0.005" expanded="true" height="82" name="Odor" width="90" x="313" y="34">
+            <parameter key="attribute_filter_type" value="single"/>
+            <parameter key="attribute" value="odor"/>
+            <parameter key="attributes" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="false"/>
+            <list key="value_mappings">
+              <parameter key="a" value="almond"/>
+              <parameter key="l" value="anise"/>
+              <parameter key="c" value="creosote"/>
+              <parameter key="y" value="fishy"/>
+              <parameter key="f" value="foul"/>
+              <parameter key="m" value="musty"/>
+              <parameter key="n" value="none"/>
+              <parameter key="p" value="pungent"/>
+              <parameter key="s" value="spicy"/>
+            </list>
+            <parameter key="consider_regular_expressions" value="false"/>
+            <parameter key="add_default_mapping" value="false"/>
+          </operator>
+          <operator activated="true" class="map" compatibility="12.0.005" expanded="true" height="82" name="Cap Shape" width="90" x="447" y="34">
+            <parameter key="attribute_filter_type" value="single"/>
+            <parameter key="attribute" value="odor"/>
+            <parameter key="attributes" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="false"/>
+            <list key="value_mappings">
+              <parameter key="x" value="convex"/>
+              <parameter key="b" value="bell"/>
+              <parameter key="c" value="conical"/>
+              <parameter key="f" value="flat"/>
+              <parameter key="k" value="knobbed"/>
+              <parameter key="s" value="sunken"/>
+            </list>
+            <parameter key="consider_regular_expressions" value="false"/>
+            <parameter key="add_default_mapping" value="false"/>
+          </operator>
+          <operator activated="true" class="map" compatibility="12.0.005" expanded="true" height="82" name="Gill Size" width="90" x="581" y="34">
+            <parameter key="attribute_filter_type" value="single"/>
+            <parameter key="attribute" value="gill-size"/>
+            <parameter key="attributes" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="false"/>
+            <list key="value_mappings">
+              <parameter key="b" value="broad"/>
+              <parameter key="n" value="narrow"/>
+            </list>
+            <parameter key="consider_regular_expressions" value="false"/>
+            <parameter key="add_default_mapping" value="false"/>
+          </operator>
+          <operator activated="true" class="map" compatibility="12.0.005" expanded="true" height="82" name="Population" width="90" x="715" y="34">
+            <parameter key="attribute_filter_type" value="single"/>
+            <parameter key="attribute" value="population"/>
+            <parameter key="attributes" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="false"/>
+            <list key="value_mappings">
+              <parameter key="a" value="abundant"/>
+              <parameter key="c" value="clustered"/>
+              <parameter key="n" value="numerous"/>
+              <parameter key="s" value="scattered"/>
+              <parameter key="v" value="several"/>
+              <parameter key="y" value="solitary"/>
+            </list>
+            <parameter key="consider_regular_expressions" value="false"/>
+            <parameter key="add_default_mapping" value="false"/>
+          </operator>
+          <operator activated="true" class="map" compatibility="12.0.005" expanded="true" height="82" name="Habitat" width="90" x="849" y="34">
+            <parameter key="attribute_filter_type" value="single"/>
+            <parameter key="attribute" value="habitat"/>
+            <parameter key="attributes" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="false"/>
+            <list key="value_mappings">
+              <parameter key="g" value="grasses"/>
+              <parameter key="l" value="leaves"/>
+              <parameter key="m" value="meadowns"/>
+              <parameter key="p" value="paths"/>
+              <parameter key="u" value="urban"/>
+              <parameter key="w" value="waste"/>
+              <parameter key="d" value="woods"/>
+            </list>
+            <parameter key="consider_regular_expressions" value="false"/>
+            <parameter key="add_default_mapping" value="false"/>
+          </operator>
+          <connect from_port="in 1" to_op="Poisonous" to_port="example set input"/>
+          <connect from_op="Poisonous" from_port="example set output" to_op="Colors" to_port="example set input"/>
+          <connect from_op="Colors" from_port="example set output" to_op="Odor" to_port="example set input"/>
+          <connect from_op="Odor" from_port="example set output" to_op="Cap Shape" to_port="example set input"/>
+          <connect from_op="Cap Shape" from_port="example set output" to_op="Gill Size" to_port="example set input"/>
+          <connect from_op="Gill Size" from_port="example set output" to_op="Population" to_port="example set input"/>
+          <connect from_op="Population" from_port="example set output" to_op="Habitat" to_port="example set input"/>
+          <connect from_op="Habitat" from_port="example set output" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="12.0.005" expanded="true" height="103" name="Replace Missing Values" width="90" x="581" y="34">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="average"/>
+        <list key="columns"/>
+      </operator>
+      <operator activated="true" class="blending:split_data" compatibility="12.0.005" expanded="true" height="103" name="Split Data" width="90" x="715" y="34">
+        <enumeration key="partitions">
+          <parameter key="ratio" value="0.5"/>
+          <parameter key="ratio" value="0.5"/>
+        </enumeration>
+        <parameter key="sampling_type" value="automatic"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="true" class="concurrency:loop_parameters" compatibility="12.0.005" expanded="true" height="103" name="Loop Parameters" width="90" x="849" y="34">
+        <list key="parameters">
+          <parameter key="Decision Tree.maximal_depth" value="[1;20;20;linear]"/>
+        </list>
+        <parameter key="error_handling" value="fail on error"/>
+        <parameter key="log_performance" value="true"/>
+        <parameter key="log_all_criteria" value="false"/>
+        <parameter key="synchronize" value="false"/>
+        <parameter key="enable_parallel_execution" value="true"/>
+        <process expanded="true">
+          <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="12.0.005" expanded="true" height="103" name="Decision Tree" width="90" x="179" y="34">
+            <parameter key="criterion" value="gini_index"/>
+            <parameter key="maximal_depth" value="10"/>
+            <parameter key="apply_pruning" value="true"/>
+            <parameter key="confidence" value="0.1"/>
+            <parameter key="apply_prepruning" value="true"/>
+            <parameter key="minimal_gain" value="0.01"/>
+            <parameter key="minimal_leaf_size" value="4"/>
+            <parameter key="minimal_size_for_split" value="4"/>
+            <parameter key="number_of_prepruning_alternatives" value="3"/>
+          </operator>
+          <operator activated="true" class="apply_model" compatibility="12.0.005" expanded="true" height="82" name="Train" width="90" x="313" y="34">
+            <list key="application_parameters"/>
+          </operator>
+          <operator activated="true" class="performance_classification" compatibility="12.0.005" expanded="true" height="82" name="Train Performance" width="90" x="447" y="34">
+            <parameter key="main_criterion" value="first"/>
+            <parameter key="accuracy" value="true"/>
+            <parameter key="classification_error" value="false"/>
+            <parameter key="kappa" value="false"/>
+            <parameter key="weighted_mean_recall" value="false"/>
+            <parameter key="weighted_mean_precision" value="false"/>
+            <parameter key="spearman_rho" value="false"/>
+            <parameter key="kendall_tau" value="false"/>
+            <parameter key="absolute_error" value="false"/>
+            <parameter key="relative_error" value="false"/>
+            <parameter key="relative_error_lenient" value="false"/>
+            <parameter key="relative_error_strict" value="false"/>
+            <parameter key="normalized_absolute_error" value="false"/>
+            <parameter key="root_mean_squared_error" value="false"/>
+            <parameter key="root_relative_squared_error" value="false"/>
+            <parameter key="squared_error" value="false"/>
+            <parameter key="correlation" value="false"/>
+            <parameter key="squared_correlation" value="false"/>
+            <parameter key="cross-entropy" value="false"/>
+            <parameter key="margin" value="false"/>
+            <parameter key="soft_margin_loss" value="false"/>
+            <parameter key="logistic_loss" value="false"/>
+            <parameter key="skip_undefined_labels" value="true"/>
+            <parameter key="use_example_weights" value="true"/>
+            <list key="class_weights"/>
+          </operator>
+          <operator activated="true" class="apply_model" compatibility="12.0.005" expanded="true" height="82" name="Test" width="90" x="313" y="136">
+            <list key="application_parameters"/>
+          </operator>
+          <operator activated="true" class="performance_classification" compatibility="12.0.005" expanded="true" height="82" name="Test Performance" width="90" x="447" y="136">
+            <parameter key="main_criterion" value="first"/>
+            <parameter key="accuracy" value="true"/>
+            <parameter key="classification_error" value="false"/>
+            <parameter key="kappa" value="false"/>
+            <parameter key="weighted_mean_recall" value="false"/>
+            <parameter key="weighted_mean_precision" value="false"/>
+            <parameter key="spearman_rho" value="false"/>
+            <parameter key="kendall_tau" value="false"/>
+            <parameter key="absolute_error" value="false"/>
+            <parameter key="relative_error" value="false"/>
+            <parameter key="relative_error_lenient" value="false"/>
+            <parameter key="relative_error_strict" value="false"/>
+            <parameter key="normalized_absolute_error" value="false"/>
+            <parameter key="root_mean_squared_error" value="false"/>
+            <parameter key="root_relative_squared_error" value="false"/>
+            <parameter key="squared_error" value="false"/>
+            <parameter key="correlation" value="false"/>
+            <parameter key="squared_correlation" value="false"/>
+            <parameter key="cross-entropy" value="false"/>
+            <parameter key="margin" value="false"/>
+            <parameter key="soft_margin_loss" value="false"/>
+            <parameter key="logistic_loss" value="false"/>
+            <parameter key="skip_undefined_labels" value="true"/>
+            <parameter key="use_example_weights" value="true"/>
+            <list key="class_weights"/>
+          </operator>
+          <connect from_port="input 1" to_op="Decision Tree" to_port="training set"/>
+          <connect from_port="input 2" to_op="Test" to_port="unlabelled data"/>
+          <connect from_op="Decision Tree" from_port="model" to_op="Train" to_port="model"/>
+          <connect from_op="Decision Tree" from_port="exampleSet" to_op="Train" to_port="unlabelled data"/>
+          <connect from_op="Train" from_port="labelled data" to_op="Train Performance" to_port="labelled data"/>
+          <connect from_op="Train" from_port="model" to_op="Test" to_port="model"/>
+          <connect from_op="Test" from_port="labelled data" to_op="Test Performance" to_port="labelled data"/>
+          <connect from_op="Test" from_port="model" to_port="output 1"/>
+          <connect from_op="Test Performance" from_port="performance" to_port="performance"/>
+          <portSpacing port="source_input 1" spacing="0"/>
+          <portSpacing port="source_input 2" spacing="0"/>
+          <portSpacing port="source_input 3" spacing="0"/>
+          <portSpacing port="sink_performance" spacing="0"/>
+          <portSpacing port="sink_output 1" spacing="0"/>
+          <portSpacing port="sink_output 2" spacing="0"/>
+          <portSpacing port="sink_output 3" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Open File" from_port="file" to_op="Loop Zip-File Entries" to_port="file"/>
+      <connect from_op="Loop Zip-File Entries" from_port="out 1" to_op="Append" to_port="example set 1"/>
+      <connect from_op="Append" from_port="merged set" to_op="Maps" to_port="in 1"/>
+      <connect from_op="Maps" from_port="out 1" to_op="Replace Missing Values" to_port="example set input"/>
+      <connect from_op="Replace Missing Values" from_port="example set output" to_op="Split Data" to_port="example set"/>
+      <connect from_op="Split Data" from_port="partition 1" to_op="Loop Parameters" to_port="input 1"/>
+      <connect from_op="Split Data" from_port="partition 2" to_op="Loop Parameters" to_port="input 2"/>
+      <connect from_op="Loop Parameters" from_port="output 1" to_port="result 1"/>
+      <connect from_op="Loop Parameters" from_port="output 2" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+    </process>
+  </operator>
+</process>

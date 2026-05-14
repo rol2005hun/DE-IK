@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import os
 
 # --- 16. FELADAT: Regio-jelolo modszer kezzel (Kereses algoritmussal) ---
 def region_labeling_manual(img_bin):
@@ -46,13 +47,13 @@ def region_labeling_manual(img_bin):
     return colored_img
 
 def main():
-    img = cv2.imread('input.png', cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input_binary.png'), cv2.IMREAD_GRAYSCALE)
     if img is not None:
         # Biztositjuk a tokeletes fekete-feher kepet a bemenetnek
         _, img_bin = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
         
         result = region_labeling_manual(img_bin)
-        cv2.imwrite('16_regiok.png', result)
+        cv2.imwrite(os.path.join(os.path.dirname(os.path.abspath(__file__)), '16_regiok.png'), result)
 
 if __name__ == '__main__':
     main()

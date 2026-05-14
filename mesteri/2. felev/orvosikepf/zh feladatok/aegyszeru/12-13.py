@@ -38,13 +38,19 @@ def main():
         # Ha a feladat IHPF-et ker, csak ird at a mode='low'-t mode='high'-ra!
         ilpf = apply_freq_filter(img, 50, ftype='ideal', mode='low')
         blpf = apply_freq_filter(img, 50, ftype='butterworth', mode='low')
-        cv2.imwrite('12_diff_ideal_butter.png', get_diff(ilpf, blpf))
+        glpf = apply_freq_filter(img, 50, ftype='gaussian', mode='low')
+        cv2.imwrite('12_diff_I_B.png', get_diff(ilpf, blpf))
+        cv2.imwrite('12_diff_I_G.png', get_diff(ilpf, glpf))
+        cv2.imwrite('12_diff_B_G.png', get_diff(blpf, glpf))
 
         # --- 13. FELADAT Hivasa (IBPF, BBPF, GBPF) ---
         # Ha a feladat IBSF-et ker, csak ird at a mode-ot 'bandstop'-ra!
         ibpf = apply_freq_filter(img, 30, d1=80, ftype='ideal', mode='bandpass')
         bbpf = apply_freq_filter(img, 30, d1=80, ftype='butterworth', mode='bandpass')
-        cv2.imwrite('13_diff_ideal_butter_bp.png', get_diff(ibpf, bbpf))
+        gbpf = apply_freq_filter(img, 30, d1=80, ftype='gaussian', mode='bandpass')
+        cv2.imwrite('13_diff_I_B.png', get_diff(ibpf, bbpf))
+        cv2.imwrite('13_diff_I_G.png', get_diff(ibpf, gbpf))
+        cv2.imwrite('13_diff_B_G.png', get_diff(bbpf, gbpf))
 
 if __name__ == '__main__':
     main()

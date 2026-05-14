@@ -36,6 +36,7 @@ megoldas(Diakok) :-
     JozsefSzakja \= 'biologia',
     
     % 3. VADKERTI GABRIELLA NEM a SZEGEDI-KÉMIA szakos hallgató.
+    member([_, _, 'szeged', 'kemia'], Diakok),
     member(['vadkerti', 'gabriella', VadkertiEgyeteme, VadkertiSzakja], Diakok),
     (VadkertiEgyeteme \= 'szeged'; VadkertiSzakja \= 'kemia'),
     

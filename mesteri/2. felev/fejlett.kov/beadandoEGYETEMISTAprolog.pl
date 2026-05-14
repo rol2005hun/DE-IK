@@ -38,7 +38,7 @@ megoldas(Diakok) :-
     % 3. VADKERTI GABRIELLA NEM a SZEGEDI-KÉMIA szakos hallgató.
     member([_, _, 'szeged', 'kemia'], Diakok),
     member(['vadkerti', 'gabriella', VadkertiEgyeteme, VadkertiSzakja], Diakok),
-    (VadkertiEgyeteme \= 'szeged'; VadkertiSzakja \= 'kemia'),
+    \+ (VadkertiEgyeteme = 'szeged', VadkertiSzakja = 'kemia'),
     
     % 4. JENEY (PÉCS) keresztneve NEM VINCE.
     member(['jeney', JeneyKeresztneve, 'pecs', _], Diakok),
